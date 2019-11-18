@@ -12,6 +12,7 @@
   let verificationCode;
   let loading;
   let verificationToken;
+  let progress = "0%";
 
   let feedbackInformation = "";
   async function getOneTimeCode(e) {}
@@ -29,12 +30,15 @@
       console.log("yyyyy");
       const call = await apiCall("/login", { email: email });
       if (call.message === "NoAccount") {
-        console.log("huhhhhh");
+        progress = "33%";
         register = true;
         headerText = "Register";
       } else if (!call.error) {
         console.log("Login no error");
         headerText = "Verify login";
+
+        progress = "50%";
+
         feedbackInformation =
           "An email with the verification code have been sent to " + email;
         verify = true;
@@ -51,6 +55,7 @@
     try {
       const call = await apiCall("/registerUser", { name: name, email: email });
       if (!call.error) {
+        progress = "66%";
         verify = true;
         verificationToken = call.data.token;
         console.log(verificationToken);
@@ -62,6 +67,7 @@
       console.log(err);
     }
   }
+
   async function verifyRegistration(e) {
     e.preventDefault();
     console.log(verificationToken);
@@ -71,6 +77,10 @@
         verificationCode: verificationCode
       });
       feedbackInformation = call.message;
+      if (!call.error) {
+        progress = "3/3";
+        progressWidth = 3 / 3;
+      }
     } catch (err) {
       console.log(err);
     }
@@ -80,55 +90,103 @@
 <style>
   main {
     text-align: center;
+    height: 100%;
+    width: 100%;
+    background-color: #007aff;
+    padding: 3% 0 3% 0;
+    position: absolute;
+  }
+  #login {
+    padding: 1%;
+    width: 30%;
+    margin: auto;
+    height: 55vh;
+    background-color: white;
+    display: inline-block;
+    border-radius: 8px;
+    position: relative;
+  }
+  #progressContainer {
+    position: absolute;
+    bottom: 10px;
+    width: 92%;
+  }
+  .progress {
+    position: initial;
   }
 </style>
 
 <main>
-  <header>
-    <h1>{headerText}</h1>
-  </header>
-  <span>{feedbackInformation}</span>
+  <div id="login">
+    <header>
+      <h1>{headerText}</h1>
+    </header>
 
-  {#if verify}
-    <form action="" on:submit={verifyRegistration}>
-      <input
-        type="text"
-        name="verificationCode"
-        id="verificationCode"
-        bind:value={verificationCode}
-        placeholder="Verification code" />
-      <input type="submit" value="Finish" />
-    </form>
-  {:else if loading}
-    <div class="spinner-border text-primary" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-  {:else}
-    <!-- else content here -->
-
-    <form action="" on:submit={login}>
-      {#if register}
-        <br />
-        <div transition:slide>
+    {#if verify}
+      <form on:submit={verifyRegistration}>
+        <div class="form-group">
+          <label for="verficationCode">Verification code</label>
           <input
+            bind:value={verificationCode}
             type="text"
-            name="Name"
-            id="Name"
-            bind:value={name}
-            placeholder="Your name" />
+            class="form-control"
+            id="verficationCode"
+            aria-describedby="emailHelp"
+            placeholder="Enter verification code" />
+          <small id="emailHelp" class="form-text text-muted">
+            {feedbackInformation}
+          </small>
         </div>
-      {/if}
-      <input
-        type="email"
-        name="email"
-        bind:value={email}
-        id="enterEmail"
-        placeholder="E-Mail" />
 
-      <br />
-      <input type="submit" value="Proceed" />
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    {:else if loading}
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    {:else}
+      <!-- Input before registration  -->
+      <form on:submit={login}>
+        <div class="form-group">
+          {#if register}
+            <div class="form-group" transition:slide>
+              <label for="exampleInputPassword1">Your name</label>
+              <input
+                bind:value={name}
+                type="text"
+                class="form-control"
+                id="nameInput"
+                placeholder="Your name" />
+            </div>
+          {/if}
+          <label for="exampleInputEmail1">Email address</label>
+          <input
+            bind:value={email}
+            type="email"
+            class="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            placeholder="Enter email" />
 
-    </form>
-  {/if}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    {/if}
+    <div id="progressContainer">
+      <div class="progress">
+        <div
+          class="progress-bar"
+          role="progressbar"
+          style={'width:' + progress}
+          aria-valuenow="25"
+          aria-valuemin="0"
+          aria-valuemax="100">
+          {progress}
+        </div>
+      </div>
+    </div>
+
+  </div>
 
 </main>

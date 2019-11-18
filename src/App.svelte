@@ -27,10 +27,10 @@
 </style>
 
 <Router {url}>
-  <div>
-    <Route path="/">
-      <Login {apiCall} />
-    </Route>
-    <Route path="*" component={PageNotFound} />
-  </div>
+
+  <Route path="/">
+    <Login {apiCall} />
+  </Route>
+  <Route path="*" component={PageNotFound} />
+
 </Router>
