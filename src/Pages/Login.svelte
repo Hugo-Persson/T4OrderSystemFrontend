@@ -1,5 +1,5 @@
 <script>
-  import { slide } from "svelte/transition";
+  import { slide, fade } from "svelte/transition";
 
   export let apiCall;
 
@@ -28,7 +28,9 @@
 
     try {
       console.log("yyyyy");
+
       const call = await apiCall("/login", { email: email });
+
       if (call.message === "NoAccount") {
         progress = "33%";
         register = true;
@@ -78,8 +80,7 @@
       });
       feedbackInformation = call.message;
       if (!call.error) {
-        progress = "3/3";
-        progressWidth = 3 / 3;
+        progress = "100%";
       }
     } catch (err) {
       console.log(err);
@@ -92,7 +93,6 @@
     text-align: center;
     height: 100%;
     width: 100%;
-    background-color: #007aff;
     padding: 3% 0 3% 0;
     position: absolute;
   }
@@ -116,14 +116,14 @@
   }
 </style>
 
-<main>
+<main class={progress === '100%' ? 'bg-success' : 'bg-primary'}>
   <div id="login">
     <header>
       <h1>{headerText}</h1>
     </header>
 
     {#if verify}
-      <form on:submit={verifyRegistration}>
+      <form transition:slide on:submit={verifyRegistration}>
         <div class="form-group">
           <label for="verficationCode">Verification code</label>
           <input
@@ -146,10 +146,10 @@
       </div>
     {:else}
       <!-- Input before registration  -->
-      <form on:submit={login}>
+      <form transition:slide on:submit={login}>
         <div class="form-group">
           {#if register}
-            <div class="form-group" transition:slide>
+            <div class="form-group" in:slide>
               <label for="exampleInputPassword1">Your name</label>
               <input
                 bind:value={name}
