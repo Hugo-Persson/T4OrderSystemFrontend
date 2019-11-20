@@ -1,5 +1,6 @@
 <script>
   import { slide, fade } from "svelte/transition";
+  import { navigate } from "svelte-routing";
 
   export let apiCall;
 
@@ -15,30 +16,29 @@
   let progress = "0%";
 
   let feedbackInformation = "";
-  async function getOneTimeCode(e) {}
   async function login(e) {
     e.preventDefault();
 
     console.log(register);
     if (register) {
       registerUser(e);
-      console.log("wrong");
       return;
     }
 
     try {
-      console.log("yyyyy");
-
+      loading = true;
       const call = await apiCall("/login", { email: email });
 
       if (call.message === "NoAccount") {
         progress = "33%";
         register = true;
+        loading = false;
         headerText = "Register";
       } else if (!call.error) {
+        loading = false;
         console.log("Login no error");
         headerText = "Verify login";
-
+        verificationToken = call.data.token;
         progress = "50%";
 
         feedbackInformation =
@@ -56,6 +56,7 @@
     e.preventDefault();
     try {
       const call = await apiCall("/registerUser", { name: name, email: email });
+
       if (!call.error) {
         progress = "66%";
         verify = true;
@@ -69,8 +70,33 @@
       console.log(err);
     }
   }
-
+  async function verifyWithCode(e) {
+    try {
+      console.log("code");
+      e.preventDefault();
+      console.log(verificationToken);
+      const call = await apiCall("/verifyWithCode", {
+        verificationCode: verificationCode,
+        token: verificationToken
+      });
+      console.log(call);
+      if (call.error) {
+      } else {
+        //authed
+        progress = "100%";
+        console.log(call);
+        if (call.admin) {
+          navigate("/adminPanel");
+        } else {
+          navigate("/makeOrder");
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
   async function verifyRegistration(e) {
+    console.log("reg");
     e.preventDefault();
     console.log(verificationToken);
     try {
@@ -111,6 +137,9 @@
     bottom: 10px;
     width: 92%;
   }
+  .spinner-border {
+    margin: 10px;
+  }
   .progress {
     position: initial;
   }
@@ -123,7 +152,7 @@
     </header>
 
     {#if verify}
-      <form transition:slide on:submit={verifyRegistration}>
+      <form transition:slide on:submit={verifyWithCode}>
         <div class="form-group">
           <label for="verficationCode">Verification code</label>
           <input
@@ -140,16 +169,12 @@
 
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
-    {:else if loading}
-      <div class="spinner-border text-primary" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
     {:else}
       <!-- Input before registration  -->
       <form transition:slide on:submit={login}>
         <div class="form-group">
-          {#if register}
-            <div class="form-group" in:slide>
+          {#if headerText === 'Register'}
+            <div class="form-group">
               <label for="exampleInputPassword1">Your name</label>
               <input
                 bind:value={name}
@@ -173,7 +198,13 @@
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     {/if}
+
     <div id="progressContainer">
+      {#if loading}
+        <div class="spinner-border text-primary" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      {/if}
       <div class="progress">
         <div
           class="progress-bar"
