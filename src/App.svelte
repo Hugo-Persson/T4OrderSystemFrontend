@@ -65,6 +65,7 @@
 </style>
 
 <Router {url}>
+  <Route path="/">loading</Route>
   <Route path="/authenticate">
     <Login {apiCall} />
   </Route>

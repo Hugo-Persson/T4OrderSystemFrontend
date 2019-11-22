@@ -1,9 +1,12 @@
 <script>
   import { navigate } from "svelte-routing";
+  import AddFile from "./Components/AddFile.svelte";
   export let apiCall;
   export let checkUser;
   let user;
   let loading = true;
+  let files = [];
+
   checkRoute();
   async function checkRoute() {
     try {
@@ -18,6 +21,12 @@
     } catch (err) {
       console.log(err);
     }
+  }
+  function addFile(e) {
+    e.preventDefault();
+    console.log("add file");
+    files = [...files, {}];
+    console.log(files);
   }
 </script>
 
@@ -36,8 +45,27 @@
 {:else}
   <main>
     <form>
-      <h3>Typ av uppdrag</h3>
       <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+          placeholder="Product name" />
+      </div>
+      <div class="form-group">
+        <div class="form-row">
+          <div class="col">
+            <input type="text" class="form-control" placeholder="Orderer" />
+          </div>
+          <div class="col">
+            <input type="text" class="form-control" placeholder="Responsible" />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <h3>Typ av uppdrag</h3>
         <div class="form-check">
           <input
             class="form-check-input"
@@ -84,7 +112,15 @@
           rows="3" />
       </div>
       <h3>Files</h3>
-      <button type="submit" class="btn btn-primary">Submit</button>
+
+      {#each files as file}
+        <AddFile fileObj={file} />
+      {/each}
+
+      <button class="btn btn-primary" on:click={addFile}>Add file</button>
+
+      <hr class="my-4" />
+      <button type="submit" class="btn btn-success btn-lg">Make order</button>
     </form>
   </main>
 {/if}
