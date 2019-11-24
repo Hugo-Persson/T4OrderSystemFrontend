@@ -3,7 +3,7 @@
   import { Router, Route, navigate } from "svelte-routing";
   import Login from "./Pages/Login.svelte";
   import PageNotFound from "./Pages/404.svelte";
-  import AdminDashboard from "./Pages/AdminDashboard.svelte";
+  import AdminPanel from "./Pages/AdminPanel.svelte";
   import MakeOrder from "./Pages/MakeOrder.svelte";
 
   function apiCall(path, data) {
@@ -47,7 +47,7 @@
     try {
       if (user.authenticated) {
         if (user.admin) {
-          return "/admin";
+          return "/adminPanel";
         } else {
           return "/makeOrder";
         }
@@ -69,8 +69,8 @@
   <Route path="/authenticate">
     <Login {apiCall} />
   </Route>
-  <Route path="/adminDashboard">
-    <AdminDashboard {apiCall} />
+  <Route path="/adminPanel">
+    <AdminPanel {apiCall} />
   </Route>
   <Route path="/makeOrder">
     <MakeOrder {apiCall} {checkUser} />

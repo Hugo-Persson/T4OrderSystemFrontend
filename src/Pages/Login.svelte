@@ -83,7 +83,6 @@
       if (call.error) {
       } else {
         //authed
-        progress = "100%";
         console.log(call);
         if (call.admin) {
           navigate("/adminPanel");

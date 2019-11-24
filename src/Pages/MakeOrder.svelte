@@ -1,16 +1,18 @@
 <script>
   import { navigate } from "svelte-routing";
+
   import AddFile from "./Components/AddFile.svelte";
   export let apiCall;
   export let checkUser;
   let user;
   let loading = true;
   let files = [];
+  let fileDescriptions = [];
 
   checkRoute();
   async function checkRoute() {
     try {
-      const user = await apiCall("/checkAccount");
+      user = await apiCall("/checkAccount");
       const path = checkUser(user);
 
       console.log(user);
@@ -25,8 +27,24 @@
   function addFile(e) {
     e.preventDefault();
     console.log("add file");
-    files = [...files, {}];
+    fileDescriptions = [...fileDescriptions, undefined];
+    console.log(fileDescriptions);
     console.log(files);
+  }
+  function submitForm(e) {
+    e.preventDefault();
+    console.log(e.currentTarget);
+    const formData = new FormData(e.currentTarget);
+    files.map(file => formData.append("files", file));
+    formData.append("fileDescriptions", fileDescriptions);
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+    const init = {
+      method: "POST",
+      body: formData
+    };
+    fetch("http://localhost:8000/makeOrder", init);
   }
 </script>
 
@@ -44,22 +62,37 @@
   Loading...
 {:else}
   <main>
-    <form>
+    <form on:submit={submitForm}>
       <div class="form-group">
+        <label for="productName">Product name</label>
         <input
           type="text"
           class="form-control"
-          id="exampleInputEmail1"
+          id="productName"
+          name="productName"
           aria-describedby="emailHelp"
           placeholder="Product name" />
       </div>
       <div class="form-group">
         <div class="form-row">
+
           <div class="col">
-            <input type="text" class="form-control" placeholder="Orderer" />
+            <label for="orderer">Orderer</label>
+            <input
+              name="orderer"
+              type="text"
+              id="orderer"
+              class="form-control"
+              placeholder="Orderer" />
           </div>
           <div class="col">
-            <input type="text" class="form-control" placeholder="Responsible" />
+            <label for="responsible">Responsible</label>
+            <input
+              name="responsible"
+              type="text"
+              id="responsible"
+              class="form-control"
+              placeholder="Responsible" />
           </div>
         </div>
       </div>
@@ -71,8 +104,8 @@
             class="form-check-input"
             type="checkbox"
             value=""
-            id="defaultCheck1" />
-          <label class="form-check-label" for="defaultCheck1">
+            id="tillverkning" />
+          <label class="form-check-label" for="tillverkning">
             Tillverkning
           </label>
         </div>
@@ -81,8 +114,8 @@
             class="form-check-input"
             type="checkbox"
             value=""
-            id="defaultCheck1" />
-          <label class="form-check-label" for="defaultCheck1">
+            id="tillverkningsunderlag" />
+          <label class="form-check-label" for="tillverkningsunderlag">
             Tillverkningsunderlag
           </label>
         </div>
@@ -91,8 +124,8 @@
             class="form-check-input"
             type="checkbox"
             value=""
-            id="defaultCheck1" />
-          <label class="form-check-label" for="defaultCheck1">Beräkning</label>
+            id="beräkning" />
+          <label class="form-check-label" for="beräkning">Beräkning</label>
         </div>
       </div>
 
@@ -106,15 +139,12 @@
 
       <div class="form-group">
         <h3>Önskemål</h3>
-        <textarea
-          class="form-control"
-          id="exampleFormControlTextarea1"
-          rows="3" />
+        <textarea class="form-control" id="productDescripion" rows="3" />
       </div>
       <h3>Files</h3>
 
-      {#each files as file}
-        <AddFile fileObj={file} />
+      {#each fileDescriptions as desc, i}
+        <AddFile index={i} {files} descriptions={fileDescriptions} />
       {/each}
 
       <button class="btn btn-primary" on:click={addFile}>Add file</button>
