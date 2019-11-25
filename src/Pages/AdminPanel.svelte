@@ -7,24 +7,29 @@
     {
       name: "something",
       number: 1,
+      responsible: "John Doe",
       customer: "Hugo Persson",
       status: "Ej Påbörjad"
     },
     {
       name: "Ye",
       number: 2,
+      responsible: "John Doe",
+
       customer: "Hugo Persson",
       status: "Påbörjad"
     },
     {
       name: "cool shit",
       number: 3,
+      responsible: "John Doe",
       customer: "Hugo Persson",
       status: "Avslutad"
     },
     {
       name: "cool shit",
       number: 4,
+      responsible: "John Doe",
       customer: "Kanye",
       status: "Ej Påbörjad"
     }
@@ -36,6 +41,7 @@
       order =>
         order.number == searchQuery ||
         searchProperty(order.name) ||
+        searchProperty(order.responsible) ||
         searchProperty(order.customer)
     );
   }
@@ -66,6 +72,7 @@
         <th scope="col">#</th>
         <th scope="col">Namn</th>
         <th scope="col " class="d-none d-sm-table-cell">Beställare</th>
+        <th scope="col " class="d-none d-md-table-cell">Ansvarig</th>
         <th scope="col">Status</th>
         <th scope="col">
           <form
