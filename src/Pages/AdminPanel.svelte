@@ -2,15 +2,16 @@
   import { Link } from "svelte-routing";
   import Order from "./Components/Order.svelte";
 
-  let orders = [
+  let searchQuery = "";
+  let allOrders = [
     {
-      name: "cool shit",
+      name: "something",
       number: 1,
       customer: "Hugo Persson",
       status: "Ej Påbörjad"
     },
     {
-      name: "cool shit",
+      name: "Ye",
       number: 2,
       customer: "Hugo Persson",
       status: "Påbörjad"
@@ -24,10 +25,23 @@
     {
       name: "cool shit",
       number: 4,
-      customer: "Hugo Persson",
+      customer: "Kanye",
       status: "Ej Påbörjad"
     }
   ];
+  let showOrders = allOrders;
+  function filter(e) {
+    e.preventDefault();
+    showOrders = allOrders.filter(
+      order =>
+        order.number == searchQuery ||
+        searchProperty(order.name) ||
+        searchProperty(order.customer)
+    );
+  }
+  function searchProperty(prop) {
+    return prop.toLowerCase().search(searchQuery.toLocaleLowerCase()) > -1;
+  }
 </script>
 
 <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
@@ -55,8 +69,10 @@
         <th scope="col">Status</th>
         <th scope="col">
           <form
+            on:submit={filter}
             class="form-inline my-2 my-lg-0 text-center justify-content-end">
             <input
+              bind:value={searchQuery}
               class="form-control mr-sm-2 "
               type="search"
               placeholder="Sök"
@@ -69,7 +85,7 @@
       </tr>
     </thead>
     <tbody>
-      {#each orders as order}
+      {#each showOrders as order}
         <Order {order} />
       {/each}
 
