@@ -40,11 +40,7 @@
     for (let [key, value] of formData.entries()) {
       console.log(key, value);
     }
-    const init = {
-      method: "POST",
-      body: formData
-    };
-    fetch("http://localhost:8000/makeOrder", init);
+    const order = apiCall("/makeOrder", formData, "multipart/form-data");
   }
 </script>
 
@@ -63,94 +59,94 @@
 {:else}
   <main>
     <form on:submit={submitForm}>
-      <div class="form-group">
-        <label for="productName">Product name</label>
-        <input
-          type="text"
-          class="form-control"
-          id="productName"
-          name="productName"
-          aria-describedby="emailHelp"
-          placeholder="Product name" />
-      </div>
+
       <div class="form-group">
         <div class="form-row">
 
           <div class="col">
-            <label for="orderer">Orderer</label>
+            <label for="productName">Projektnamn</label>
             <input
-              name="orderer"
+              type="text"
+              class="form-control"
+              id="productName"
+              name="productName"
+              aria-describedby="emailHelp"
+              placeholder="Projektnamn" />
+          </div>
+          <!-- <div class="col">
+            <label for="orderer"></label>
+            <input
+              name="customer"
               type="text"
               id="orderer"
               class="form-control"
               placeholder="Orderer" />
-          </div>
-          <div class="col">
-            <label for="responsible">Responsible</label>
+          </div> -->
+        </div>
+
+        <div class="form-group mt-3">
+          <h3>Typ av uppdrag</h3>
+          <div class="form-check">
             <input
-              name="responsible"
-              type="text"
-              id="responsible"
-              class="form-control"
-              placeholder="Responsible" />
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="tillverkning"
+              name="producation" />
+            <label class="form-check-label" for="tillverkning">
+              Tillverkning
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="tillverkningsunderlag"
+              name="productionDocumentation" />
+            <label class="form-check-label" for="tillverkningsunderlag">
+              Tillverkningsunderlag
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="beräkning"
+              name="calculation" />
+            <label class="form-check-label" for="beräkning">Beräkning</label>
           </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <h3>Typ av uppdrag</h3>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="tillverkning" />
-          <label class="form-check-label" for="tillverkning">
-            Tillverkning
-          </label>
+        <div class="form-group">
+          <h3>Beskrivning av produkt</h3>
+          <textarea
+            class="form-control"
+            id="exampleFormControlTextarea1"
+            rows="3"
+            name="productDescription" />
         </div>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="tillverkningsunderlag" />
-          <label class="form-check-label" for="tillverkningsunderlag">
-            Tillverkningsunderlag
-          </label>
+
+        <div class="form-group">
+          <h3>Önskemål</h3>
+          <textarea
+            class="form-control"
+            id="productDescripion"
+            name="wishes"
+            rows="3" />
         </div>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="beräkning" />
-          <label class="form-check-label" for="beräkning">Beräkning</label>
-        </div>
+        <h3>Files</h3>
+
+        {#each fileDescriptions as desc, i}
+          <AddFile index={i} {files} descriptions={fileDescriptions} />
+        {/each}
+
+        <button class="btn btn-primary" on:click={addFile}>Add file</button>
+
+        <hr class="my-4" />
+        <button type="submit" class="btn btn-success btn-lg">Make order</button>
       </div>
-
-      <div class="form-group">
-        <h3>Beskrivning av produkt</h3>
-        <textarea
-          class="form-control"
-          id="exampleFormControlTextarea1"
-          rows="3" />
-      </div>
-
-      <div class="form-group">
-        <h3>Önskemål</h3>
-        <textarea class="form-control" id="productDescripion" rows="3" />
-      </div>
-      <h3>Files</h3>
-
-      {#each fileDescriptions as desc, i}
-        <AddFile index={i} {files} descriptions={fileDescriptions} />
-      {/each}
-
-      <button class="btn btn-primary" on:click={addFile}>Add file</button>
-
-      <hr class="my-4" />
-      <button type="submit" class="btn btn-success btn-lg">Make order</button>
     </form>
   </main>
 {/if}

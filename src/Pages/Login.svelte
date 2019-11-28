@@ -27,7 +27,7 @@
 
     try {
       loading = true;
-      const call = await apiCall("/login", { email: email });
+      const call = await apiCall("/login", JSON.stringify({ email: email }));
 
       if (call.message === "NoAccount") {
         progress = "33%";
@@ -55,7 +55,10 @@
   async function registerUser(e) {
     e.preventDefault();
     try {
-      const call = await apiCall("/registerUser", { name: name, email: email });
+      const call = await apiCall(
+        "/registerUser",
+        JSON.stringify({ name: name, email: email })
+      );
 
       if (!call.error) {
         progress = "66%";
@@ -75,10 +78,13 @@
       console.log("code");
       e.preventDefault();
       console.log(verificationToken);
-      const call = await apiCall("/verifyWithCode", {
-        verificationCode: verificationCode,
-        token: verificationToken
-      });
+      const call = await apiCall(
+        "/verifyWithCode",
+        JSON.stringify({
+          verificationCode: verificationCode,
+          token: verificationToken
+        })
+      );
       console.log(call);
       if (call.error) {
       } else {
@@ -89,23 +95,6 @@
         } else {
           navigate("/makeOrder");
         }
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
-  async function verifyRegistration(e) {
-    console.log("reg");
-    e.preventDefault();
-    console.log(verificationToken);
-    try {
-      const call = await apiCall("/verifyRegistration", {
-        token: verificationToken,
-        verificationCode: verificationCode
-      });
-      feedbackInformation = call.message;
-      if (!call.error) {
-        progress = "100%";
       }
     } catch (err) {
       console.log(err);

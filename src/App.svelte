@@ -6,26 +6,31 @@
   import AdminPanel from "./Pages/AdminPanel.svelte";
   import MakeOrder from "./Pages/MakeOrder.svelte";
 
-  function apiCall(path, data) {
-    console.log(data);
-    console.log(JSON.stringify(data));
+  function apiCall(path, body, type) {
+    const contentType = !(type === "multipart/form-data");
+    console.log(body);
     return new Promise((resolve, reject) => {
       const init = {
         method: "POST",
         mode: "cors",
         credentials: "include",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
+
+        body: body
       };
+      if (contentType) {
+        // If I want to send form data I don't want to set contentType
+        init.headers = {
+          "Content-Type": contentType
+        };
+      }
+      console.log(init);
       fetch("http://localhost:8000" + path, init)
         .then(res => {
           console.log(res.headers.get("set-cookie"));
           console.log(document.cookie);
           return res.json();
         })
-        .then(data => resolve(data))
+        .then(body => resolve(body))
         .catch(err => reject(err));
     });
   }
