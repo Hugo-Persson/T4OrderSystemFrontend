@@ -20,7 +20,7 @@
       if (contentType) {
         // If I want to send form data I don't want to set contentType
         init.headers = {
-          "Content-Type": contentType
+          "Content-Type": "application/json"
         };
       }
       console.log(init);

@@ -1,42 +1,15 @@
 <script>
   import { Link } from "svelte-routing";
   import Order from "./Components/Order.svelte";
+  export let apiCall;
 
+  getAllOrders();
   let searchQuery = "";
-  let allOrders = [
-    {
-      name: "something",
-      number: 1,
-      responsible: "John Doe",
-      customer: "Hugo Persson",
-      status: "Ej Påbörjad"
-    },
-    {
-      name: "Ye",
-      number: 2,
-      responsible: "John Doe",
 
-      customer: "Hugo Persson",
-      status: "Påbörjad"
-    },
-    {
-      name: "cool shit",
-      number: 3,
-      responsible: "John Doe",
-      customer: "Hugo Persson",
-      status: "Avslutad"
-    },
-    {
-      name: "cool shit",
-      number: 4,
-      responsible: "John Doe",
-      customer: "Kanye",
-      status: "Ej Påbörjad"
-    }
-  ];
+  let allOrders = [];
   let showOrders = allOrders;
   function filter(e) {
-    e.preventDefault();
+    if (e) e.preventDefault();
     showOrders = allOrders.filter(
       order =>
         order.number == searchQuery ||
@@ -47,6 +20,22 @@
   }
   function searchProperty(prop) {
     return prop.toLowerCase().search(searchQuery.toLocaleLowerCase()) > -1;
+  }
+
+  async function getAllOrders() {
+    try {
+      const call = await apiCall("/getAllorders");
+      if (call.error) {
+        console.log("error", call.message);
+      }
+      console.log("call", call);
+      allOrders = call.data;
+      console.log("allOrders", allOrders);
+      showOrders = allOrders;
+      console.log("show", showOrders);
+    } catch (err) {
+      console.log(err);
+    }
   }
 </script>
 

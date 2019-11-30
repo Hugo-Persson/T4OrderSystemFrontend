@@ -31,7 +31,7 @@
     console.log(fileDescriptions);
     console.log(files);
   }
-  function submitForm(e) {
+  async function submitForm(e) {
     e.preventDefault();
     console.log(e.currentTarget);
     const formData = new FormData(e.currentTarget);
@@ -40,7 +40,8 @@
     for (let [key, value] of formData.entries()) {
       console.log(key, value);
     }
-    const order = apiCall("/makeOrder", formData, "multipart/form-data");
+    const order = await apiCall("/makeOrder", formData, "multipart/form-data");
+    console.log("order", order);
   }
 </script>
 
@@ -62,7 +63,6 @@
 
       <div class="form-group">
         <div class="form-row">
-
           <div class="col">
             <label for="productName">Projektnamn</label>
             <input
@@ -73,15 +73,16 @@
               aria-describedby="emailHelp"
               placeholder="Projektnamn" />
           </div>
-          <!-- <div class="col">
-            <label for="orderer"></label>
+          <div class="col">
+            <label for="customer">Beställare</label>
             <input
               name="customer"
               type="text"
-              id="orderer"
+              id="customer"
               class="form-control"
-              placeholder="Orderer" />
-          </div> -->
+              value={user.name}
+              placeholder="Beställare" />
+          </div>
         </div>
 
         <div class="form-group mt-3">
