@@ -20,7 +20,7 @@
 {#if expanded}
 
   <tr style="cursor:initial">
-    <td id="expandedContent" colspan="6" transition:slide>
+    <td id="expandedContent" colspan="7" transition:slide>
       <ExpandedOrder {order} />
     </td>
   </tr>
@@ -33,11 +33,12 @@
       {order.responsible.name}
     </td>
     <td class="align-middle">{order.status}</td>
+    <td class="align-middle">{new Date(order.date).toDateString()}</td>
     <td>
       <button class="btn btn-danger">Delete order</button>
     </td>
   </tr>
-  {#if false}
+  <!--   {#if false}
     <tr on:click={expand} class="expand" transition:slide>
       <th transition:slide class="align-middle" scope="row">{order.number}</th>
       <td transition:slide class="align-middle">{order.productName}</td>
@@ -47,7 +48,7 @@
       <td transition:slide class="align-middle d-none d-md-table-cell">
         {order.responsible}
       </td>
-      <td transition:slide class="align-middle">{order.status}</td>
+      <td transition:slide class="align-middle ">{order.status}</td>
       <td>
         <button class="btn btn-danger">Delete order</button>
       </td>
@@ -74,6 +75,7 @@
       {order.responsible}
     </td>
     <td transition:slide class="align-middle">{order.status}</td>
+    <td transition:slide class="align-middle">{order.}</td>
     <td transition:slide />
-  </tr>
+  </tr> -->
 {/if}

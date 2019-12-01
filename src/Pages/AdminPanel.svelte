@@ -63,6 +63,7 @@
         <th scope="col " class="d-none d-sm-table-cell">Beställare</th>
         <th scope="col " class="d-none d-md-table-cell">Ansvarig</th>
         <th scope="col">Status</th>
+        <th scope="col">Datum</th>
         <th scope="col">
           <form
             on:submit={filter}
