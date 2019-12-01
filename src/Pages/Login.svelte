@@ -119,7 +119,6 @@
   }
   #login {
     padding: 1%;
-    width: 30%;
     margin: auto;
     height: 55vh;
     background-color: white;
@@ -127,6 +126,25 @@
     border-radius: 8px;
     position: relative;
   }
+
+  @media (min-width: 576px) {
+    #login {
+      width: 95%;
+    }
+  }
+
+  @media (min-width: 768px) {
+    #login {
+      width: 60%;
+    }
+  }
+
+  @media (min-width: 992px) {
+    #login {
+      width: 30%;
+    }
+  }
+
   #progressContainer {
     position: absolute;
     bottom: 10px;
