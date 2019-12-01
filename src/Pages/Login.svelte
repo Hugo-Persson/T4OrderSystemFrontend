@@ -15,6 +15,9 @@
   let verificationToken;
   let progress = "0%";
 
+  let alertText = "";
+  let error = false;
+
   let feedbackInformation = "";
   async function login(e) {
     e.preventDefault();
@@ -87,6 +90,10 @@
       );
       console.log(call);
       if (call.error) {
+        error = true;
+        if (call.message === "WrongCode") {
+          alertText = "Wrong verification code entered, try again";
+        }
       } else {
         //authed
         console.log(call);
@@ -131,9 +138,19 @@
   .progress {
     position: initial;
   }
+  .alert {
+    top: 0px;
+    position: absolute;
+    width: 100%;
+  }
 </style>
 
 <main class={progress === '100%' ? 'bg-success' : 'bg-primary'}>
+  {#if error}
+    <div class="alert alert-danger" transition:slide role="alert">
+      {alertText}
+    </div>
+  {/if}
   <div id="login">
     <header>
       <h1>{headerText}</h1>

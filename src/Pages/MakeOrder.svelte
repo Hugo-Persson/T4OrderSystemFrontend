@@ -9,6 +9,10 @@
   let files = [];
   let fileDescriptions = [];
 
+  let success = false;
+  let error = false;
+  let alertText = "";
+
   checkRoute();
   async function checkRoute() {
     try {
@@ -40,8 +44,14 @@
     for (let [key, value] of formData.entries()) {
       console.log(key, value);
     }
-    const order = await apiCall("/makeOrder", formData, "multipart/form-data");
-    console.log("order", order);
+    const call = await apiCall("/makeOrder", formData, "multipart/form-data");
+    if (call.error) {
+      error = true;
+      alertText = "Kunde inte skapa beställning, försök igen senare";
+    } else {
+      success = true;
+      alertText = "Order skapad";
+    }
   }
 </script>
 
@@ -59,6 +69,15 @@
   Loading...
 {:else}
   <main>
+    {#if error || success}
+      <div
+        class="alert {error ? 'alert-danger' : 'alert-success'}
+        "
+        transition:slide
+        role="alert">
+        {alertText}
+      </div>
+    {/if}
     <form on:submit={submitForm}>
 
       <div class="form-group">

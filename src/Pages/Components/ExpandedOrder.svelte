@@ -1,5 +1,7 @@
 <script>
   export let order;
+  export let toggleExpand;
+  import { slide } from "svelte/transition";
 </script>
 
 <style>
@@ -10,8 +12,8 @@
   } */
 </style>
 
-<div class="container-fluid">
-  <div class="row row-cols-3">
+<div class="container-fluid" transition:slide>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
     <div class="col mb-4">
       <div class="card h-100">
         <div class="card-header">Orderdetaljer</div>
@@ -95,5 +97,15 @@
       </div>
     </div>
 
+  </div>
+  <div class="row">
+    <div class="col ">
+      <button class="btn btn-lg btn-danger" on:click={toggleExpand}>
+        Stäng
+      </button>
+    </div>
+    <div class="col ">
+      <button class="btn btn-lg btn-success">Spara</button>
+    </div>
   </div>
 </div>
