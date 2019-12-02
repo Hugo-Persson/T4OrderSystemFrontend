@@ -83,7 +83,7 @@
     </thead>
     <tbody>
       {#each showOrders as order}
-        <Order {order} />
+        <Order {apiCall} {getAllOrders} {order} />
       {/each}
 
     </tbody>

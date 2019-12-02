@@ -11,6 +11,7 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
+    "@types/jquery": "^3.3.31",
     "sirv-cli": "^0.4.4",
     "svelte-routing": "^1.4.0"
   },

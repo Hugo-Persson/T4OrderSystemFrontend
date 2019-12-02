@@ -1,6 +1,7 @@
 <script>
   export let order;
   export let toggleExpand;
+  export let deleteOrder;
   import { slide } from "svelte/transition";
 </script>
 
@@ -12,12 +13,14 @@
   } */
 </style>
 
-<div class="container-fluid" transition:slide>
+<div class="container-fluid text-left" transition:slide>
   <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
     <div class="col mb-4">
       <div class="card h-100">
         <div class="card-header">Orderdetaljer</div>
         <ul class="list-group list-group-flush">
+          <li class="list-group-item">Ordernummer: {order.number}</li>
+
           <li class="list-group-item">
             Datum: {new Date(order.date).toDateString()}
           </li>
@@ -29,7 +32,42 @@
               <option>Avslutad</option>
             </select>
           </li>
-          <li class="list-group-item">Ordernummer: {order.number}</li>
+          <li class="list-group-item">
+            <div class="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="customCheckDisabled1"
+                disabled />
+              <label class="custom-control-label" for="customCheckDisabled1">
+                Tillverkning
+              </label>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="customCheckDisabled1"
+                disabled />
+              <label class="custom-control-label" for="customCheckDisabled1">
+                Tillverkningsunderlag
+              </label>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="customCheckDisabled1"
+                disabled />
+              <label class="custom-control-label" for="customCheckDisabled1">
+                Beräkning
+              </label>
+            </div>
+          </li>
         </ul>
       </div>
     </div>
@@ -84,14 +122,12 @@
         <div class="card-header">Filer</div>
         <ul class="list-group list-group-flush">
           {#each order.files as file}
-            <li class="list-group-item">
+            <li class="list-group-item" style="border:none">
               <a href={'http://localhost:8000' + file.url}>
                 {file.originalName}
               </a>
             </li>
-            <li class="list-group-item" style="border:none">
-              {file.description}
-            </li>
+            <li class="list-group-item">{file.description}</li>
           {/each}
         </ul>
       </div>
@@ -100,7 +136,14 @@
   </div>
   <div class="row">
     <div class="col ">
-      <button class="btn btn-lg btn-danger" on:click={toggleExpand}>
+      <button class="btn btn-lg btn-danger" on:click={deleteOrder}>
+        Delete order
+      </button>
+
+    </div>
+    <div class="col">
+
+      <button class="btn btn-lg btn-secondary" on:click={toggleExpand}>
         Stäng
       </button>
     </div>
