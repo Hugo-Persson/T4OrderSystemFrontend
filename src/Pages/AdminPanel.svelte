@@ -12,9 +12,12 @@
     showOrders = allOrders.filter(
       order =>
         order.number == searchQuery ||
-        searchProperty(order.name) ||
-        searchProperty(order.responsible) ||
-        searchProperty(order.customer)
+        searchProperty(order.productName) ||
+        searchProperty(order.responsible.name) ||
+        searchProperty(order.responsible.email) ||
+        searchProperty(order.customer.name) ||
+        searchProperty(order.customer.email) ||
+        searchProperty(order.status)
     );
   }
   function searchProperty(prop) {
