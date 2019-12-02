@@ -1,5 +1,6 @@
 <script>
   import Order from "./Components/Order.svelte";
+  import { url } from "../Router.js";
   export let apiCall;
 
   getAllOrders();
@@ -39,6 +40,10 @@
       console.log(err);
     }
   }
+  function directUser(e, path) {
+    if (e) e.preventDefault();
+    url.set(path);
+  }
 </script>
 
 <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
@@ -46,10 +51,20 @@
 
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="/adminPanel/manageUser">
-        Manage users
+      <a
+        href="#"
+        class="nav-item nav-link active"
+        on:click={e => directUser(e, 'adminPanel')}>
+        Beställningar
       </a>
-      <a class="nav-item nav-link" href="">Settings</a>
+      <a
+        href="#"
+        class="nav-item nav-link "
+        on:click={e => directUser(e, 'manageUsers')}>
+        Hantera användare
+      </a>
+
+      <a class="nav-item nav-link" href="#">Logga ut</a>
     </div>
   </div>
 </nav>
