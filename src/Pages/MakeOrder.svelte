@@ -48,105 +48,108 @@
   }
 </style>
 
-<main>
+<div class="container-fluid">
+  <main>
 
-  {#if error || success}
-    <div
-      class="alert {error ? 'alert-danger' : 'alert-success'}
-      "
-      transition:slide
-      role="alert">
-      {alertText}
-    </div>
-  {/if}
-  <form on:submit={submitForm}>
-
-    <div class="form-group">
-      <div class="form-row">
-        <div class="col">
-          <label for="productName">Projektnamn</label>
-          <input
-            type="text"
-            class="form-control"
-            id="productName"
-            name="productName"
-            aria-describedby="emailHelp"
-            placeholder="Projektnamn" />
-        </div>
-        <div class="col">
-          <label for="customer">Beställare</label>
-          <input
-            name="customer"
-            type="text"
-            id="customer"
-            class="form-control"
-            value={user.name}
-            placeholder="Beställare" />
-        </div>
+    {#if error || success}
+      <div
+        class="alert {error ? 'alert-danger' : 'alert-success'}
+        "
+        transition:slide
+        role="alert">
+        {alertText}
       </div>
+    {/if}
 
-      <div class="form-group mt-3">
-        <h3>Typ av uppdrag</h3>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="tillverkning"
-            name="producation" />
-          <label class="form-check-label" for="tillverkning">
-            Tillverkning
-          </label>
-        </div>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="tillverkningsunderlag"
-            name="productionDocumentation" />
-          <label class="form-check-label" for="tillverkningsunderlag">
-            Tillverkningsunderlag
-          </label>
-        </div>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="beräkning"
-            name="calculation" />
-          <label class="form-check-label" for="beräkning">Beräkning</label>
-        </div>
-      </div>
+    <form on:submit={submitForm}>
 
       <div class="form-group">
-        <h3>Beskrivning av produkt</h3>
-        <textarea
-          class="form-control"
-          id="exampleFormControlTextarea1"
-          rows="3"
-          name="productDescription" />
+        <div class="form-row">
+          <div class="col">
+            <label for="productName">Projektnamn</label>
+            <input
+              type="text"
+              class="form-control"
+              id="productName"
+              name="productName"
+              aria-describedby="emailHelp"
+              placeholder="Projektnamn" />
+          </div>
+          <div class="col">
+            <label for="customer">Beställare</label>
+            <input
+              name="customer"
+              type="text"
+              id="customer"
+              class="form-control"
+              value={user.name}
+              placeholder="Beställare" />
+          </div>
+        </div>
+
+        <div class="form-group mt-3">
+          <h3>Typ av uppdrag</h3>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="tillverkning"
+              name="producation" />
+            <label class="form-check-label" for="tillverkning">
+              Tillverkning
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="tillverkningsunderlag"
+              name="productionDocumentation" />
+            <label class="form-check-label" for="tillverkningsunderlag">
+              Tillverkningsunderlag
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="beräkning"
+              name="calculation" />
+            <label class="form-check-label" for="beräkning">Beräkning</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <h3>Beskrivning av produkt</h3>
+          <textarea
+            class="form-control"
+            id="exampleFormControlTextarea1"
+            rows="3"
+            name="productDescription" />
+        </div>
+
+        <div class="form-group">
+          <h3>Önskemål</h3>
+          <textarea
+            class="form-control"
+            id="productDescripion"
+            name="wishes"
+            rows="3" />
+        </div>
+        <h3>Filer</h3>
+
+        {#each fileDescriptions as desc, i}
+          <AddFile index={i} {files} descriptions={fileDescriptions} />
+        {/each}
+
+        <button class="btn btn-primary" on:click={addFile}>Add file</button>
+
+        <hr class="my-4" />
+        <button type="submit" class="btn btn-success btn-lg">Make order</button>
       </div>
-
-      <div class="form-group">
-        <h3>Önskemål</h3>
-        <textarea
-          class="form-control"
-          id="productDescripion"
-          name="wishes"
-          rows="3" />
-      </div>
-      <h3>Filer</h3>
-
-      {#each fileDescriptions as desc, i}
-        <AddFile index={i} {files} descriptions={fileDescriptions} />
-      {/each}
-
-      <button class="btn btn-primary" on:click={addFile}>Add file</button>
-
-      <hr class="my-4" />
-      <button type="submit" class="btn btn-success btn-lg">Make order</button>
-    </div>
-  </form>
-</main>
+    </form>
+  </main>
+</div>
