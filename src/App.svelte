@@ -1,10 +1,14 @@
 <script>
-  export let url;
-  import { Router, Route, navigate } from "svelte-routing";
   import Login from "./Pages/Login.svelte";
   import PageNotFound from "./Pages/404.svelte";
   import AdminPanel from "./Pages/AdminPanel.svelte";
   import MakeOrder from "./Pages/MakeOrder.svelte";
+  import { url } from "./Router.js";
+
+  let urlValue;
+  let userValue;
+
+  url.subscribe(value => (urlValue = value));
 
   function apiCall(path, body, type) {
     const contentType = !(type === "multipart/form-data");
@@ -36,13 +40,13 @@
   }
   if (window.location.pathname === "/") routeUser();
   async function routeUser() {
-    console.log("hey");
     try {
       const user = await apiCall("/checkAccount");
       console.log(user);
+      userValue = user;
       const path = checkUser(user);
       console.log(path);
-      navigate(path);
+      url.set(path);
     } catch (err) {
       console.log("err");
       console.log(err);
@@ -52,24 +56,33 @@
     try {
       if (user.authenticated) {
         if (user.admin) {
-          return "/adminPanel";
+          return "adminPanel";
         } else {
-          return "/makeOrder";
+          return "makeOrder";
         }
       } else {
-        return "/authenticate";
+        return "authenticate";
       }
     } catch (err) {
       console.log(err);
     }
   }
+  $: console.log(urlValue);
 </script>
 
 <style>
 
 </style>
 
-<Router {url}>
+{#if urlValue === 'authenticate'}
+  <Login {apiCall} />
+{:else if urlValue === 'adminPanel'}
+  <AdminPanel {apiCall} />
+{:else if urlValue === 'makeOrder'}
+  <MakeOrder user={userValue} {apiCall} />
+{:else if urlValue === 'manageUsers'}manageUsers{:else}Checking route{/if}
+
+<!-- <Router {url}>
   <Route path="/">loading</Route>
   <Route path="/authenticate">
     <Login {apiCall} />
@@ -82,4 +95,4 @@
   </Route>
   <Route path="*" component={PageNotFound} />
 
-</Router>
+</Router> -->

@@ -1,5 +1,4 @@
 <script>
-  import { Link } from "svelte-routing";
   import Order from "./Components/Order.svelte";
   export let apiCall;
 

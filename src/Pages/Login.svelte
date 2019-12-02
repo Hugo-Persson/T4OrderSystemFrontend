@@ -1,7 +1,6 @@
 <script>
   import { slide, fade } from "svelte/transition";
-  import { navigate } from "svelte-routing";
-
+  import { url } from "../Router";
   export let apiCall;
 
   let email;
@@ -98,9 +97,9 @@
         //authed
         console.log(call);
         if (call.admin) {
-          navigate("/adminPanel");
+          url.set("adminPanel");
         } else {
-          navigate("/makeOrder");
+          url.set("makeOrder");
         }
       }
     } catch (err) {

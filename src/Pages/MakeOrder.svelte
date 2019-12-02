@@ -1,11 +1,9 @@
 <script>
-  import { navigate } from "svelte-routing";
-
+  import { slide, fade } from "svelte/transition";
   import AddFile from "./Components/AddFile.svelte";
+
   export let apiCall;
-  export let checkUser;
-  let user;
-  let loading = true;
+  export let user;
   let files = [];
   let fileDescriptions = [];
 
@@ -13,21 +11,6 @@
   let error = false;
   let alertText = "";
 
-  checkRoute();
-  async function checkRoute() {
-    try {
-      user = await apiCall("/checkAccount");
-      const path = checkUser(user);
-
-      console.log(user);
-      if (path !== "/makeOrder") {
-        navigate(path);
-      }
-      loading = false;
-    } catch (err) {
-      console.log(err);
-    }
-  }
   function addFile(e) {
     e.preventDefault();
     console.log("add file");
@@ -65,108 +48,105 @@
   }
 </style>
 
-{#if loading}
-  Loading...
-{:else}
-  <main>
-    {#if error || success}
-      <div
-        class="alert {error ? 'alert-danger' : 'alert-success'}
-        "
-        transition:slide
-        role="alert">
-        {alertText}
+<main>
+
+  {#if error || success}
+    <div
+      class="alert {error ? 'alert-danger' : 'alert-success'}
+      "
+      transition:slide
+      role="alert">
+      {alertText}
+    </div>
+  {/if}
+  <form on:submit={submitForm}>
+
+    <div class="form-group">
+      <div class="form-row">
+        <div class="col">
+          <label for="productName">Projektnamn</label>
+          <input
+            type="text"
+            class="form-control"
+            id="productName"
+            name="productName"
+            aria-describedby="emailHelp"
+            placeholder="Projektnamn" />
+        </div>
+        <div class="col">
+          <label for="customer">Beställare</label>
+          <input
+            name="customer"
+            type="text"
+            id="customer"
+            class="form-control"
+            value={user.name}
+            placeholder="Beställare" />
+        </div>
       </div>
-    {/if}
-    <form on:submit={submitForm}>
+
+      <div class="form-group mt-3">
+        <h3>Typ av uppdrag</h3>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="tillverkning"
+            name="producation" />
+          <label class="form-check-label" for="tillverkning">
+            Tillverkning
+          </label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="tillverkningsunderlag"
+            name="productionDocumentation" />
+          <label class="form-check-label" for="tillverkningsunderlag">
+            Tillverkningsunderlag
+          </label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="beräkning"
+            name="calculation" />
+          <label class="form-check-label" for="beräkning">Beräkning</label>
+        </div>
+      </div>
 
       <div class="form-group">
-        <div class="form-row">
-          <div class="col">
-            <label for="productName">Projektnamn</label>
-            <input
-              type="text"
-              class="form-control"
-              id="productName"
-              name="productName"
-              aria-describedby="emailHelp"
-              placeholder="Projektnamn" />
-          </div>
-          <div class="col">
-            <label for="customer">Beställare</label>
-            <input
-              name="customer"
-              type="text"
-              id="customer"
-              class="form-control"
-              value={user.name}
-              placeholder="Beställare" />
-          </div>
-        </div>
-
-        <div class="form-group mt-3">
-          <h3>Typ av uppdrag</h3>
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              value=""
-              id="tillverkning"
-              name="producation" />
-            <label class="form-check-label" for="tillverkning">
-              Tillverkning
-            </label>
-          </div>
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              value=""
-              id="tillverkningsunderlag"
-              name="productionDocumentation" />
-            <label class="form-check-label" for="tillverkningsunderlag">
-              Tillverkningsunderlag
-            </label>
-          </div>
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              value=""
-              id="beräkning"
-              name="calculation" />
-            <label class="form-check-label" for="beräkning">Beräkning</label>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <h3>Beskrivning av produkt</h3>
-          <textarea
-            class="form-control"
-            id="exampleFormControlTextarea1"
-            rows="3"
-            name="productDescription" />
-        </div>
-
-        <div class="form-group">
-          <h3>Önskemål</h3>
-          <textarea
-            class="form-control"
-            id="productDescripion"
-            name="wishes"
-            rows="3" />
-        </div>
-        <h3>Files</h3>
-
-        {#each fileDescriptions as desc, i}
-          <AddFile index={i} {files} descriptions={fileDescriptions} />
-        {/each}
-
-        <button class="btn btn-primary" on:click={addFile}>Add file</button>
-
-        <hr class="my-4" />
-        <button type="submit" class="btn btn-success btn-lg">Make order</button>
+        <h3>Beskrivning av produkt</h3>
+        <textarea
+          class="form-control"
+          id="exampleFormControlTextarea1"
+          rows="3"
+          name="productDescription" />
       </div>
-    </form>
-  </main>
-{/if}
+
+      <div class="form-group">
+        <h3>Önskemål</h3>
+        <textarea
+          class="form-control"
+          id="productDescripion"
+          name="wishes"
+          rows="3" />
+      </div>
+      <h3>Filer</h3>
+
+      {#each fileDescriptions as desc, i}
+        <AddFile index={i} {files} descriptions={fileDescriptions} />
+      {/each}
+
+      <button class="btn btn-primary" on:click={addFile}>Add file</button>
+
+      <hr class="my-4" />
+      <button type="submit" class="btn btn-success btn-lg">Make order</button>
+    </div>
+  </form>
+</main>
