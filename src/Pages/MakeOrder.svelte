@@ -34,7 +34,7 @@
       alertText = "Kunde inte skapa beställning, försök igen senare";
     } else {
       success = true;
-      alertText = "Order skapad";
+      alertText = "Beställning skapad";
       form.reset();
     }
   }
@@ -160,10 +160,14 @@
             descriptions={fileDescriptions} />
         {/each}
 
-        <button class="btn btn-primary" on:click={addFile}>Add file</button>
+        <button class="btn btn-primary" on:click={addFile}>
+          Lägg till fil
+        </button>
 
         <hr class="my-4" />
-        <button type="submit" class="btn btn-success btn-lg">Make order</button>
+        <button type="submit" class="btn btn-success btn-lg">
+          Gör beställning
+        </button>
       </div>
     </form>
   </main>
