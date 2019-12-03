@@ -20,8 +20,9 @@
   }
   async function submitForm(e) {
     e.preventDefault();
-    console.log(e.currentTarget);
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    console.log("form", form);
+    const formData = new FormData(form);
     files.map(file => formData.append("files", file));
     formData.append("fileDescriptions", fileDescriptions);
     for (let [key, value] of formData.entries()) {
@@ -34,6 +35,7 @@
     } else {
       success = true;
       alertText = "Order skapad";
+      form.reset();
     }
   }
 </script>

@@ -42,7 +42,7 @@
   async function routeUser() {
     try {
       const user = await apiCall("/checkAccount");
-      console.log(user);
+      console.log("user",user);
       userValue = user;
       const path = checkUser(user);
       console.log(path);
