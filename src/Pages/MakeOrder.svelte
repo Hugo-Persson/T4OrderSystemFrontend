@@ -14,7 +14,7 @@
   function addFile(e) {
     e.preventDefault();
     console.log("add file");
-    fileDescriptions = [...fileDescriptions, undefined];
+    fileDescriptions = [...fileDescriptions, ""];
     console.log(fileDescriptions);
     console.log(files);
   }
@@ -37,6 +37,15 @@
       alertText = "Order skapad";
       form.reset();
     }
+  }
+  function deleteFileInput(removeIndex) {
+    console.log("fileDesc1", fileDescriptions);
+
+    files = files.filter((value, index) => index !== removeIndex);
+    fileDescriptions = fileDescriptions.filter(
+      (value, index) => index !== removeIndex
+    );
+    console.log("fileDesc", fileDescriptions);
   }
 </script>
 
@@ -144,7 +153,11 @@
         <h3>Filer</h3>
 
         {#each fileDescriptions as desc, i}
-          <AddFile index={i} {files} descriptions={fileDescriptions} />
+          <AddFile
+            {deleteFileInput}
+            index={i}
+            {files}
+            descriptions={fileDescriptions} />
         {/each}
 
         <button class="btn btn-primary" on:click={addFile}>Add file</button>
