@@ -97,7 +97,7 @@
         //authed
         console.log(call);
         if (call.admin) {
-          url.set("adminPanel");
+          url.set("orders");
         } else {
           url.set("makeOrder");
         }

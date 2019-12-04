@@ -1,6 +1,7 @@
 <script>
   import Order from "./Components/Order.svelte";
   import { url } from "../Router.js";
+  import AdminPanelNav from "./Components/AdminPanelNav.svelte";
   export let apiCall;
 
   getAllOrders();
@@ -40,50 +41,10 @@
       console.log(err);
     }
   }
-  function directUser(e, path) {
-    if (e) e.preventDefault();
-    url.set(path);
-  }
-  async function logOut(e) {
-    try {
-      if (e) e.preventDefault();
-      const call = await apiCall("/logOut");
-      if (call.error) {
-        alert("Kunde inte logga ut");
-      } else {
-        url.set("authenticate");
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
 </script>
 
-<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
-  <span class="navbar-brand mb-0 h1">Admin panel</span>
-
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      <a
-        href="#"
-        class="nav-item nav-link active"
-        on:click={e => directUser(e, 'adminPanel')}>
-        Beställningar
-      </a>
-      <a
-        href="#"
-        class="nav-item nav-link "
-        on:click={e => directUser(e, 'manageUsers')}>
-        Hantera användare
-      </a>
-
-      <a class="nav-item nav-link" on:click={logOut} href="#">Logga ut</a>
-    </div>
-  </div>
-</nav>
+<AdminPanelNav {apiCall} />
 <div class="card m-sm-4 m-2 text-center">
-  <div class="card-header h3">Alla beställningar</div>
-
   <table class="table table-striped table-hover table-bordered ">
     <caption>Klicka på en beställning för mer information</caption>
     <thead class="thead-dark">

@@ -3,6 +3,7 @@
   import { slide } from "svelte/transition";
   import ExpandedOrder from "./ExpandedOrder.svelte";
 
+  let tr;
   export let order;
   export let apiCall;
   export let getAllOrders;
@@ -42,11 +43,12 @@
 {#if expanded}
   <tr style="cursor:initial">
     <td id="expandedContent" colspan="7">
+
       <ExpandedOrder {deleteOrder} {order} {toggleExpand} />
     </td>
   </tr>
 {:else}
-  <tr>
+  <tr bind:this={tr}>
     <th on:click={toggleExpand} class="align-middle" scope="row">
       {order.number}
     </th>

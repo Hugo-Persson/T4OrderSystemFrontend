@@ -1,8 +1,9 @@
 <script>
   import Login from "./Pages/Login.svelte";
   import PageNotFound from "./Pages/404.svelte";
-  import AdminPanel from "./Pages/AdminPanel.svelte";
+  import Orders from "./Pages/Orders.svelte";
   import MakeOrder from "./Pages/MakeOrder.svelte";
+  import ManageUsers from "./Pages/ManageUsers.svelte";
   import { url } from "./Router.js";
 
   let urlValue;
@@ -42,7 +43,7 @@
   async function routeUser() {
     try {
       const user = await apiCall("/checkAccount");
-      console.log("user",user);
+      console.log("user", user);
       userValue = user;
       const path = checkUser(user);
       console.log(path);
@@ -56,7 +57,7 @@
     try {
       if (user.authenticated) {
         if (user.admin) {
-          return "adminPanel";
+          return "orders";
         } else {
           return "makeOrder";
         }
@@ -76,19 +77,21 @@
 
 {#if urlValue === 'authenticate'}
   <Login {apiCall} />
-{:else if urlValue === 'adminPanel'}
-  <AdminPanel {apiCall} />
+{:else if urlValue === 'orders'}
+  <Orders {apiCall} />
 {:else if urlValue === 'makeOrder'}
   <MakeOrder user={userValue} {apiCall} />
-{:else if urlValue === 'manageUsers'}manageUsers{:else}Checking route{/if}
+{:else if urlValue === 'manageUsers'}
+  <ManageUsers {apiCall} />
+{:else}Checking route{/if}
 
 <!-- <Router {url}>
   <Route path="/">loading</Route>
   <Route path="/authenticate">
     <Login {apiCall} />
   </Route>
-  <Route path="/adminPanel">
-    <AdminPanel {apiCall} />
+  <Route path="/orders">
+    <Orders {apiCall} />
   </Route>
   <Route path="/makeOrder">
     <MakeOrder {apiCall} {checkUser} />
