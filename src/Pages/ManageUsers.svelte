@@ -2,26 +2,43 @@
   import AdminPanelNav from "./Components/AdminPanelNav.svelte";
   import User from "./Components/User.svelte";
   export let apiCall;
-  let searchQuery;
-  let users = [
-    { name: "Hugo Persson", email: "hugopersson7@gmail.com", admin: false }
-  ];
+  let searchQuery = "";
+  let allUsers = [];
+  let showUsers = allUsers;
   getAllUsers();
   async function getAllUsers() {
     try {
       const call = await apiCall("/getAllUsers");
+      console.log("call", call);
       if (call.error) {
         //TODO: Error handeling
         alert("Kunde inte hämta anvädare från servern");
       } else {
-        users = call.users;
+        allUsers = call.users;
+        showUsers = call.users;
       }
     } catch (err) {
       console.log(err);
     }
   }
 
-  function filter() {}
+  function search(e) {
+    if (e) e.preventDefault();
+    console.log(allUsers);
+    showUsers = allUsers.filter(
+      user =>
+        searchProperty(user.name) ||
+        searchProperty(user.email) ||
+        (searchQuery === "admin" ? user.admin : false)
+    );
+  }
+  function searchProperty(prop) {
+    console.log(prop, searchQuery);
+    console.log(
+      prop.toLowerCase().search(searchQuery.toLocaleLowerCase()) > -1
+    );
+    return prop.toLowerCase().search(searchQuery.toLocaleLowerCase()) > -1;
+  }
 </script>
 
 <AdminPanelNav {apiCall} />
@@ -35,7 +52,7 @@
           <th scope="col ">Email</th>
           <th scope="col" colspan="2">
             <form
-              on:submit={filter}
+              on:submit={search}
               class="form-inline my-2 my-lg-0 text-center justify-content-end">
               <input
                 bind:value={searchQuery}
@@ -51,7 +68,7 @@
 
         </thead>
         <tbody>
-          {#each users as user}
+          {#each showUsers as user}
             <User {getAllUsers} {user} />
           {/each}
         </tbody>

@@ -39,7 +39,7 @@
         .catch(err => reject(err));
     });
   }
-  if (window.location.pathname === "/") routeUser();
+  routeUser();
   async function routeUser() {
     try {
       const user = await apiCall("/checkAccount");
