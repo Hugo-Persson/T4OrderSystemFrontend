@@ -5,6 +5,7 @@
   import MakeOrder from "./Pages/MakeOrder.svelte";
   import ManageUsers from "./Pages/ManageUsers.svelte";
   import ExpandedOrder from "./Pages/ExpandedOrder.svelte";
+  import MyOrders from "./Pages/MyOrders.svelte";
   import { url } from "./Router.js";
   import { selectedOrder } from "./Store.js";
 
@@ -89,6 +90,8 @@
   <ManageUsers {apiCall} />
 {:else if urlValue.substring(0, 14) === 'expandedOrder'}
   <ExpandedOrder order={selectedOrderValue} />
+{:else if urlValue.substring(0, 14) === 'myOrders'}
+  <MyOrders {apiCall} />
 {:else}Checking route{/if}
 
 <!-- <Router {url}>

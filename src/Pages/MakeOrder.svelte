@@ -61,7 +61,7 @@
 </style>
 
 <header>
-  <UserNavBar />
+  <UserNavBar {apiCall} />
 </header>
 <div class="container-fluid">
 
