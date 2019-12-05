@@ -4,11 +4,15 @@
   import Orders from "./Pages/Orders.svelte";
   import MakeOrder from "./Pages/MakeOrder.svelte";
   import ManageUsers from "./Pages/ManageUsers.svelte";
+  import ExpandedOrder from "./Pages/ExpandedOrder.svelte";
   import { url } from "./Router.js";
+  import { selectedOrder } from "./Store.js";
 
   let urlValue;
   let userValue;
+  let selectedOrderValue;
 
+  selectedOrder.subscribe(value => (selectedOrderValue = value));
   url.subscribe(value => (urlValue = value));
 
   function apiCall(path, body, type) {
@@ -83,6 +87,8 @@
   <MakeOrder user={userValue} {apiCall} />
 {:else if urlValue === 'manageUsers'}
   <ManageUsers {apiCall} />
+{:else if urlValue.substring(0, 14) === 'expandedOrder'}
+  <ExpandedOrder order={selectedOrderValue} />
 {:else}Checking route{/if}
 
 <!-- <Router {url}>

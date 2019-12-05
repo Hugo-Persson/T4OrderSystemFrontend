@@ -1,7 +1,7 @@
 <script>
   /* global $ */
   import { slide } from "svelte/transition";
-  import ExpandedOrder from "./ExpandedOrder.svelte";
+  import ExpandedOrder from "../ExpandedOrder.svelte";
 
   let tr;
   export let order;
