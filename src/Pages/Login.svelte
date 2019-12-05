@@ -178,6 +178,7 @@
         <div class="form-group">
           <label for="verficationCode">Verification code</label>
           <input
+            autocomplete="off"
             bind:value={verificationCode}
             type="text"
             class="form-control"

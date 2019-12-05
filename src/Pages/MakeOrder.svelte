@@ -1,6 +1,7 @@
 <script>
   import { slide, fade } from "svelte/transition";
   import AddFile from "./Components/AddFile.svelte";
+  import UserNavBar from "./Components/UserNavBar.svelte";
 
   export let apiCall;
   export let user;
@@ -59,7 +60,11 @@
   }
 </style>
 
+<header>
+  <UserNavBar />
+</header>
 <div class="container-fluid">
+
   <main>
 
     {#if error || success}
