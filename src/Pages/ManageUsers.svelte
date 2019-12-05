@@ -6,6 +6,21 @@
   let users = [
     { name: "Hugo Persson", email: "hugopersson7@gmail.com", admin: false }
   ];
+  getAllUsers();
+  async function getAllUsers() {
+    try {
+      const call = await apiCall("/getAllUsers");
+      if (call.error) {
+        //TODO: Error handeling
+        alert("Kunde inte hämta anvädare från servern");
+      } else {
+        users = call.users;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   function filter() {}
 </script>
 
@@ -37,7 +52,7 @@
         </thead>
         <tbody>
           {#each users as user}
-            <User {user} />
+            <User {getAllUsers} {user} />
           {/each}
         </tbody>
 
