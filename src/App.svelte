@@ -5,6 +5,7 @@
   import MakeOrder from "./Pages/MakeOrder.svelte";
   import ManageUsers from "./Pages/ManageUsers.svelte";
   import ExpandedOrder from "./Pages/ExpandedOrder.svelte";
+  import AdminPanel from "./Pages/AdminPanel.svelte";
   import MyOrders from "./Pages/MyOrders.svelte";
   import { url } from "./Router.js";
   import { selectedOrder } from "./Store.js";
@@ -82,15 +83,13 @@
 
 {#if urlValue === 'authenticate'}
   <Login {apiCall} />
-{:else if urlValue === 'orders'}
-  <Orders {apiCall} />
+{:else if urlValue === 'orders' || urlValue === 'manageUsers'}
+  <AdminPanel {apiCall} />
 {:else if urlValue === 'makeOrder'}
   <MakeOrder user={userValue} {apiCall} />
-{:else if urlValue === 'manageUsers'}
-  <ManageUsers {apiCall} />
 {:else if urlValue.substring(0, 14) === 'expandedOrder'}
   <ExpandedOrder order={selectedOrderValue} />
-{:else if urlValue.substring(0, 14) === 'myOrders'}
+{:else if urlValue === 'myOrders'}
   <MyOrders {apiCall} />
 {:else}Checking route{/if}
 

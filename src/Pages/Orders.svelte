@@ -3,12 +3,13 @@
   import { url } from "../Router.js";
   import AdminPanelNav from "./Components/AdminPanelNav.svelte";
   export let apiCall;
+  export let getAllOrders;
 
-  getAllOrders();
   let searchQuery = "";
 
-  let allOrders = [];
-  let showOrders = allOrders;
+  export let allOrders = [];
+  $: showOrders = allOrders;
+
   function filter(e) {
     if (e) e.preventDefault();
     showOrders = allOrders.filter(
@@ -25,25 +26,8 @@
   function searchProperty(prop) {
     return prop.toLowerCase().search(searchQuery.toLocaleLowerCase()) > -1;
   }
-
-  async function getAllOrders() {
-    try {
-      const call = await apiCall("/getAllorders");
-      if (call.error) {
-        console.log("error", call.message);
-      }
-      console.log("call", call);
-      allOrders = call.data;
-      console.log("allOrders", allOrders);
-      showOrders = allOrders;
-      console.log("show", showOrders);
-    } catch (err) {
-      console.log(err);
-    }
-  }
 </script>
 
-<AdminPanelNav {apiCall} />
 <div class="card m-sm-4 m-2 text-center">
   <table class="table table-striped table-hover table-bordered ">
     <caption>Klicka på en beställning för mer information</caption>

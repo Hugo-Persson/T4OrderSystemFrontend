@@ -3,24 +3,9 @@
   import User from "./Components/User.svelte";
   export let apiCall;
   let searchQuery = "";
-  let allUsers = [];
+  export let allUsers = [];
+  export let getAllUsers;
   let showUsers = allUsers;
-  getAllUsers();
-  async function getAllUsers() {
-    try {
-      const call = await apiCall("/getAllUsers");
-      console.log("call", call);
-      if (call.error) {
-        //TODO: Error handeling
-        alert("Kunde inte hämta anvädare från servern");
-      } else {
-        allUsers = call.users;
-        showUsers = call.users;
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
 
   function search(e) {
     if (e) e.preventDefault();
@@ -41,7 +26,6 @@
   }
 </script>
 
-<AdminPanelNav {apiCall} />
 <div class="container-fluid ">
   <div class="card">
     <div class="card-header">Användare</div>
