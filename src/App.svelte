@@ -83,7 +83,7 @@
 
 {#if urlValue === 'authenticate'}
   <Login {apiCall} />
-{:else if urlValue === 'orders' || urlValue === 'manageUsers'}
+{:else if urlValue === 'orders' || urlValue === 'manageUsers' || urlValue === 'expandedOrder'}
   <AdminPanel {apiCall} />
 {:else if urlValue === 'makeOrder'}
   <MakeOrder user={userValue} {apiCall} />

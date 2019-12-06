@@ -1,6 +1,8 @@
 <script>
   /* global $ */
   import { slide } from "svelte/transition";
+  import { url, params } from "../../Router.js";
+
   import ExpandedOrder from "../ExpandedOrder.svelte";
 
   let tr;
@@ -9,8 +11,9 @@
   export let getAllOrders;
   let expanded = false;
   let deleteOrderError;
-  function toggleExpand() {
-    expanded = !expanded;
+  function expandOrder() {
+    params.set({ order: order });
+    url.set("expandedOrder");
   }
   async function deleteOrder() {
     console.log("delete");
@@ -44,23 +47,23 @@
   <tr style="cursor:initial">
     <td id="expandedContent" colspan="7">
 
-      <ExpandedOrder {deleteOrder} {order} {toggleExpand} />
+      <ExpandedOrder {deleteOrder} {order} {expandOrder} />
     </td>
   </tr>
 {:else}
   <tr bind:this={tr}>
-    <th on:click={toggleExpand} class="align-middle" scope="row">
+    <th on:click={expandOrder} class="align-middle" scope="row">
       {order.number}
     </th>
-    <td on:click={toggleExpand} class="align-middle">{order.productName}</td>
-    <td on:click={toggleExpand} class="align-middle d-none d-sm-table-cell">
+    <td on:click={expandOrder} class="align-middle">{order.productName}</td>
+    <td on:click={expandOrder} class="align-middle d-none d-sm-table-cell">
       {order.customer.name}
     </td>
-    <td on:click={toggleExpand} class="align-middle d-none d-md-table-cell">
+    <td on:click={expandOrder} class="align-middle d-none d-md-table-cell">
       {order.responsible.name}
     </td>
-    <td on:click={toggleExpand} class="align-middle">{order.status}</td>
-    <td on:click={toggleExpand} class="align-middle d-none d-md-table-cell">
+    <td on:click={expandOrder} class="align-middle">{order.status}</td>
+    <td on:click={expandOrder} class="align-middle d-none d-md-table-cell">
       {new Date(order.date).toDateString()}
     </td>
     <td>

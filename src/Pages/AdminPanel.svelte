@@ -4,10 +4,13 @@
   import Orders from "./Orders.svelte";
   import ManageUsers from "./ManageUsers.svelte";
   import AdminNavBar from "./Components/AdminPanelNav.svelte";
-  import { url } from "../Router.js";
+  import ExpandedOrder from "./ExpandedOrder.svelte";
+  import { url, params } from "../Router.js";
 
   export let apiCall;
   let urlValue;
+  let paramsValue;
+  params.subscribe(e => (paramsValue = e));
   url.subscribe(e => (urlValue = e));
 
   let allOrders = [];
@@ -48,6 +51,8 @@
 </header>
 {#if urlValue === 'orders'}
   <Orders {apiCall} {getAllOrders} {allOrders} />
+{:else if urlValue === 'expandedOrder'}
+  <ExpandedOrder order={paramsValue.order} />
 {:else}
   <ManageUsers {apiCall} {getAllUsers} {allUsers} />
 {/if}
