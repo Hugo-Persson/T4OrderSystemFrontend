@@ -1,9 +1,7 @@
 <script>
   import Login from "./Pages/Login.svelte";
   import PageNotFound from "./Pages/404.svelte";
-  import Orders from "./Pages/Orders.svelte";
   import MakeOrder from "./Pages/MakeOrder.svelte";
-  import ManageUsers from "./Pages/ManageUsers.svelte";
   import ExpandedOrder from "./Pages/ExpandedOrder.svelte";
   import AdminPanel from "./Pages/AdminPanel.svelte";
   import MyOrders from "./Pages/MyOrders.svelte";
@@ -17,7 +15,7 @@
   selectedOrder.subscribe(value => (selectedOrderValue = value));
   url.subscribe(value => (urlValue = value));
 
-  function apiCall(path, body, type) {
+  function apiCall(path, body, type, noAuthHandeling) {
     const contentType = !(type === "multipart/form-data");
     console.log(body);
     return new Promise((resolve, reject) => {
@@ -36,19 +34,24 @@
       }
       console.log(init);
       fetch("http://localhost:8000" + path, init)
-        .then(res => {
-          console.log(res.headers.get("set-cookie"));
-          console.log(document.cookie);
-          return res.json();
+        .then(res => res.json())
+        .then(body => {
+          if (body.error) {
+            if (!noAuthHandeling && body.message === "NoAuth") {
+              alert("Du har blivit utloggad");
+              url.set("authenticate");
+            }
+          } else {
+            resolve(body);
+          }
         })
-        .then(body => resolve(body))
         .catch(err => reject(err));
     });
   }
   routeUser();
   async function routeUser() {
     try {
-      const user = await apiCall("/checkAccount");
+      const user = await apiCall("/checkAccount", undefined, undefined, true);
       console.log("user", user);
       userValue = user;
       const path = checkUser(user);

@@ -6,6 +6,8 @@
   import ExpandedOrder from "../ExpandedOrder.svelte";
 
   let tr;
+
+  export let deleteOrder;
   export let order;
   export let apiCall;
   export let getAllOrders;
@@ -14,26 +16,6 @@
   function expandOrder() {
     params.set({ order: order });
     url.set("expandedOrder");
-  }
-  async function deleteOrder() {
-    console.log("delete");
-    console.log(deleteOrderError);
-
-    try {
-      const call = await apiCall(
-        "/deleteOrder",
-        JSON.stringify({ id: order._id })
-      );
-      console.log(call);
-      if (call.error) {
-        // TODO:Error handeling
-      } else {
-        console.log("success");
-        getAllOrders();
-      }
-    } catch (err) {
-      console.log(err);
-    }
   }
 </script>
 
@@ -47,7 +29,7 @@
   <tr style="cursor:initial">
     <td id="expandedContent" colspan="7">
 
-      <ExpandedOrder {deleteOrder} {order} {expandOrder} />
+      <ExpandedOrder {deleteOrder} {order} {expandOrder} {deleteOrder} />
     </td>
   </tr>
 {:else}
@@ -67,7 +49,9 @@
       {new Date(order.date).toDateString()}
     </td>
     <td>
-      <button class="btn btn-danger float-right" on:click={deleteOrder}>
+      <button
+        class="btn btn-danger float-right"
+        on:click={() => deleteOrder(order._id)}>
         Radera order
       </button>
     </td>

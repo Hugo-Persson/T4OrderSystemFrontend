@@ -1,7 +1,7 @@
 <script>
   // This component exists so the data won't need to be fetched every time the user switches page
 
-  import Orders from "./Orders.svelte";
+  import ManageOrders from "./ManageOrders.svelte";
   import ManageUsers from "./ManageUsers.svelte";
   import AdminNavBar from "./Components/AdminPanelNav.svelte";
   import ExpandedOrder from "./ExpandedOrder.svelte";
@@ -44,15 +44,30 @@
       console.log(err);
     }
   }
+  async function deleteOrder(id) {
+    try {
+      const call = await apiCall("/deleteOrder", JSON.stringify({ id: id }));
+      console.log(call);
+      if (call.error) {
+        // TODO:Error handeling
+      } else {
+        console.log("success");
+        url.set("orders");
+        getAllOrders();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 </script>
 
 <header>
   <AdminNavBar />
 </header>
 {#if urlValue === 'orders'}
-  <Orders {apiCall} {getAllOrders} {allOrders} />
+  <ManageOrders {apiCall} {getAllOrders} {allOrders} {deleteOrder} />
 {:else if urlValue === 'expandedOrder'}
-  <ExpandedOrder order={paramsValue.order} />
+  <ExpandedOrder order={paramsValue.order} {deleteOrder} />
 {:else}
   <ManageUsers {apiCall} {getAllUsers} {allUsers} />
 {/if}

@@ -20,18 +20,12 @@
         <div class="card-header">Orderdetaljer</div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Ordernummer: {order.number}</li>
+          <li class="list-group-item">Namn: {order.productName}</li>
 
           <li class="list-group-item">
             Datum: {new Date(order.date).toDateString()}
           </li>
-          <li class="list-group-item">
-            Status:
-            <select class="form-control" id="exampleFormControlSelect2">
-              <option>Ej påbörjad</option>
-              <option>Påbörjad</option>
-              <option>Avslutad</option>
-            </select>
-          </li>
+
           <li class="list-group-item">
             <div class="custom-control custom-checkbox">
               <input
@@ -102,6 +96,14 @@
               class="form-control"
               aria-describedby="emailHelp" />
           </li>
+          <li class="list-group-item">
+            Status:
+            <select class="form-control" id="exampleFormControlSelect2">
+              <option>Ej påbörjad</option>
+              <option>Påbörjad</option>
+              <option>Avslutad</option>
+            </select>
+          </li>
         </ul>
       </div>
     </div>
@@ -136,19 +138,16 @@
   </div>
   <div class="row">
     <div class="col ">
-      <button class="btn btn-lg btn-danger" on:click={deleteOrder}>
-        Delete order
+      <button
+        class="btn btn-lg btn-danger"
+        on:click={() => deleteOrder(order._id)}>
+        Radera beställningar
       </button>
 
     </div>
-    <div class="col">
-
-      <button class="btn btn-lg btn-secondary" on:click={toggleExpand}>
-        Stäng
-      </button>
-    </div>
+    <div class="col" />
     <div class="col ">
-      <button class="btn btn-lg btn-success">Spara</button>
+      <button class="btn btn-lg btn-success">Spara ändringar</button>
     </div>
   </div>
 </div>

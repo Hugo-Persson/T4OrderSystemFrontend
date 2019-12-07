@@ -4,7 +4,7 @@
   import AdminPanelNav from "./Components/AdminPanelNav.svelte";
   export let apiCall;
   export let getAllOrders;
-
+  export let deleteOrder;
   let searchQuery = "";
 
   export let allOrders = [];
@@ -58,7 +58,7 @@
     </thead>
     <tbody>
       {#each showOrders as order}
-        <Order {apiCall} {getAllOrders} {order} />
+        <Order {apiCall} {getAllOrders} {order} {deleteOrder} />
       {/each}
 
     </tbody>
