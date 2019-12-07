@@ -62,12 +62,12 @@
 </script>
 
 <header>
-  <AdminNavBar />
+  <AdminNavBar {apiCall} />
 </header>
 {#if urlValue === 'orders'}
   <ManageOrders {apiCall} {getAllOrders} {allOrders} {deleteOrder} />
 {:else if urlValue === 'expandedOrder'}
-  <ExpandedOrder order={paramsValue.order} {deleteOrder} />
+  <ExpandedOrder order={paramsValue.order} {apiCall} {deleteOrder} />
 {:else}
   <ManageUsers {apiCall} {getAllUsers} {allUsers} />
 {/if}

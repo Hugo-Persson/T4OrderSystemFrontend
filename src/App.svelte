@@ -36,13 +36,16 @@
       fetch("http://localhost:8000" + path, init)
         .then(res => res.json())
         .then(body => {
+          console.log("answer");
           if (body.error) {
             if (!noAuthHandeling && body.message === "NoAuth") {
+              console.log("Logged out");
               alert("Du har blivit utloggad");
               url.set("authenticate");
-            }
+            } else resolve(body);
           } else {
             resolve(body);
+            console.log(body);
           }
         })
         .catch(err => reject(err));
@@ -51,6 +54,7 @@
   routeUser();
   async function routeUser() {
     try {
+      console.log("route user");
       const user = await apiCall("/checkAccount", undefined, undefined, true);
       console.log("user", user);
       userValue = user;

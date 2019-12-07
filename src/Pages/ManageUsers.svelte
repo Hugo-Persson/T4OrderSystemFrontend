@@ -5,7 +5,7 @@
   let searchQuery = "";
   export let allUsers = [];
   export let getAllUsers;
-  let showUsers = allUsers;
+  $: showUsers = allUsers;
 
   function search(e) {
     if (e) e.preventDefault();
@@ -53,7 +53,7 @@
         </thead>
         <tbody>
           {#each showUsers as user}
-            <User {getAllUsers} {user} />
+            <User {getAllUsers} {apiCall} {user} />
           {/each}
         </tbody>
 

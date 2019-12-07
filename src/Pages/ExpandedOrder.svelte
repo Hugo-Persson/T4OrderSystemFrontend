@@ -2,7 +2,29 @@
   export let order;
   export let toggleExpand;
   export let deleteOrder;
+  export let apiCall;
   import { slide } from "svelte/transition";
+  import { url } from "../Router.js";
+
+  async function saveChanges() {
+    try {
+      const call = await apiCall(
+        "/updateOrder",
+        JSON.stringify({
+          id: order._id,
+          email: order.responsible.email,
+          name: order.responsible.name
+        })
+      );
+      if (call.error) {
+        alert("Ett fel uppstod, försök igen");
+      } else {
+        url.set("orders");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 </script>
 
 <style>
@@ -98,10 +120,13 @@
           </li>
           <li class="list-group-item">
             Status:
-            <select class="form-control" id="exampleFormControlSelect2">
-              <option>Ej påbörjad</option>
-              <option>Påbörjad</option>
-              <option>Avslutad</option>
+            <select
+              class="form-control"
+              bind:value={order.status}
+              id="exampleFormControlSelect2">
+              <option value="Ej Påbörjad">Ej påbörjad</option>
+              <option value="Påbörjad">Påbörjad</option>
+              <option value="Avslutad">Avslutad</option>
             </select>
           </li>
         </ul>
@@ -147,7 +172,9 @@
     </div>
     <div class="col" />
     <div class="col ">
-      <button class="btn btn-lg btn-success">Spara ändringar</button>
+      <button class="btn btn-lg btn-success" on:click={saveChanges}>
+        Spara ändringar
+      </button>
     </div>
   </div>
 </div>

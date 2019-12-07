@@ -1,6 +1,7 @@
 <script>
   export let user;
   export let getAllUsers;
+  export let apiCall;
   async function deleteUser() {
     const id = user._id;
     try {
