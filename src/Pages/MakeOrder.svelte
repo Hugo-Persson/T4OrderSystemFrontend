@@ -37,6 +37,8 @@
       success = true;
       alertText = "Beställning skapad";
       form.reset();
+      files = [];
+      fileDescriptions = [];
     }
   }
   function deleteFileInput(removeIndex) {
@@ -109,9 +111,8 @@
             <input
               class="form-check-input"
               type="checkbox"
-              value=""
               id="tillverkning"
-              name="producation" />
+              name="production" />
             <label class="form-check-label" for="tillverkning">
               Tillverkning
             </label>
@@ -120,7 +121,6 @@
             <input
               class="form-check-input"
               type="checkbox"
-              value=""
               id="tillverkningsunderlag"
               name="productionDocumentation" />
             <label class="form-check-label" for="tillverkningsunderlag">
@@ -131,7 +131,6 @@
             <input
               class="form-check-input"
               type="checkbox"
-              value=""
               id="beräkning"
               name="calculation" />
             <label class="form-check-label" for="beräkning">Beräkning</label>

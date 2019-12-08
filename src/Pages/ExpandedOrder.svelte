@@ -53,11 +53,9 @@
               <input
                 type="checkbox"
                 class="custom-control-input"
-                id="customCheckDisabled1"
+                checked={order.missionType.production}
                 disabled />
-              <label class="custom-control-label" for="customCheckDisabled1">
-                Tillverkning
-              </label>
+              <label class="custom-control-label">Tillverkning</label>
             </div>
           </li>
           <li class="list-group-item">
@@ -65,11 +63,9 @@
               <input
                 type="checkbox"
                 class="custom-control-input"
-                id="customCheckDisabled1"
+                checked={order.missionType.productionDocumentation}
                 disabled />
-              <label class="custom-control-label" for="customCheckDisabled1">
-                Tillverkningsunderlag
-              </label>
+              <label class="custom-control-label">Tillverkningsunderlag</label>
             </div>
           </li>
           <li class="list-group-item">
@@ -77,11 +73,9 @@
               <input
                 type="checkbox"
                 class="custom-control-input"
-                id="customCheckDisabled1"
+                checked={order.missionType.calculation}
                 disabled />
-              <label class="custom-control-label" for="customCheckDisabled1">
-                Beräkning
-              </label>
+              <label class="custom-control-label">Beräkning</label>
             </div>
           </li>
         </ul>
