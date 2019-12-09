@@ -14,7 +14,7 @@
     if (e) e.preventDefault();
     showOrders = allOrders.filter(
       order =>
-        order.number == searchQuery ||
+        order.productNumber == searchQuery ||
         searchProperty(order.productName) ||
         searchProperty(order.responsible.name) ||
         searchProperty(order.responsible.email) ||

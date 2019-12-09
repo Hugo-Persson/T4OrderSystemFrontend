@@ -35,7 +35,7 @@
 {:else}
   <tr bind:this={tr}>
     <th on:click={expandOrder} class="align-middle" scope="row">
-      {order.number}
+      {order.productNumber}
     </th>
     <td on:click={expandOrder} class="align-middle">{order.productName}</td>
     <td on:click={expandOrder} class="align-middle d-none d-sm-table-cell">

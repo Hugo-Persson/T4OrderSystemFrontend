@@ -41,7 +41,7 @@
       <div class="card h-100">
         <div class="card-header">Orderdetaljer</div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Ordernummer: {order.number}</li>
+          <li class="list-group-item">Ordernummer: {order.productNumber}</li>
           <li class="list-group-item">Namn: {order.productName}</li>
 
           <li class="list-group-item">
