@@ -11,7 +11,7 @@
   let success = false;
   let error = false;
   let alertText = "";
-
+  init();
   async function init() {
     if (!user) {
       user = await apiCall("/checkAccount");
@@ -79,7 +79,7 @@
       <div
         class="alert {error ? 'alert-danger' : 'alert-success'}
         "
-        transition:slide
+        in:slide
         role="alert">
         {alertText}
       </div>

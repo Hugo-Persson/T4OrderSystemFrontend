@@ -39,7 +39,7 @@
       } else if (!call.error) {
         loading = false;
         console.log("Login no error");
-        headerText = "Verify login";
+        headerText = "Verifiera inloggning";
         verificationToken = call.data.token;
         progress = "50%";
 
@@ -93,7 +93,7 @@
       if (call.error) {
         error = true;
         if (call.message === "WrongCode") {
-          alertText = "Wrong verification code entered, try again";
+          alertText = "Fel verifikations kod, försök igen";
         }
       } else {
         //authed
@@ -186,7 +186,7 @@
             class="form-control"
             id="verficationCode"
             aria-describedby="emailHelp"
-            placeholder="Enter verification code" />
+            placeholder="Skriv in verifikations kod" />
           <small id="emailHelp" class="form-text text-muted">
             {feedbackInformation}
           </small>
