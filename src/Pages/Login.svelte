@@ -6,7 +6,7 @@
   let email;
   let name;
   let register = false;
-  let headerText = "Login/Register";
+  let headerText = "Logga in/Registera";
   let fetch;
   let verify = false;
   let verificationCode;
@@ -35,7 +35,7 @@
         progress = "33%";
         register = true;
         loading = false;
-        headerText = "Register";
+        headerText = "Registera";
       } else if (!call.error) {
         loading = false;
         console.log("Login no error");
@@ -44,7 +44,7 @@
         progress = "50%";
 
         feedbackInformation =
-          "An email with the verification code have been sent to " + email;
+          "Ett mail har skickats med verifikations koden till " + email;
         verify = true;
       } else {
         console.log("huh");
@@ -57,19 +57,21 @@
   async function registerUser(e) {
     e.preventDefault();
     try {
+      loading = true;
       const call = await apiCall(
         "/registerUser",
         JSON.stringify({ name: name, email: email })
       );
+      loading = false;
 
       if (!call.error) {
         progress = "66%";
         verify = true;
         verificationToken = call.data.token;
         console.log(verificationToken);
-        headerText = "Verify account";
+        headerText = "Verifiera konto";
         feedbackInformation =
-          "An email with the verification code have been sent to " + email;
+          "Ett mail har skickats med verifikations koden till " + email;
       }
     } catch (err) {
       console.log(err);
@@ -176,7 +178,7 @@
     {#if verify}
       <form transition:slide on:submit={verifyWithCode}>
         <div class="form-group">
-          <label for="verficationCode">Verification code</label>
+          <label for="verficationCode">Verifikation kod</label>
           <input
             autocomplete="off"
             bind:value={verificationCode}
@@ -190,21 +192,20 @@
           </small>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Vidare</button>
       </form>
     {:else}
-      <!-- Input before registration  -->
       <form transition:slide on:submit={login}>
         <div class="form-group">
-          {#if headerText === 'Register'}
+          {#if headerText === 'Registera'}
             <div class="form-group">
-              <label for="exampleInputPassword1">Your name</label>
+              <label for="exampleInputPassword1">Name</label>
               <input
                 bind:value={name}
                 type="text"
                 class="form-control"
                 id="nameInput"
-                placeholder="Your name" />
+                placeholder="Ditt name" />
             </div>
           {/if}
           <label for="exampleInputEmail1">Email address</label>
@@ -214,11 +215,11 @@
             class="form-control"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
-            placeholder="Enter email" />
+            placeholder="Din email" />
 
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Vidare</button>
       </form>
     {/if}
 
