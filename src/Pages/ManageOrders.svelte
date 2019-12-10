@@ -29,6 +29,9 @@
 </script>
 
 <div class="card m-sm-4 m-2 text-center">
+  <div class="card-header">
+    <h2>Alla beställningar</h2>
+  </div>
   <table class="table table-striped table-hover table-bordered ">
     <caption>Klicka på en beställning för mer information</caption>
     <thead class="thead-dark">

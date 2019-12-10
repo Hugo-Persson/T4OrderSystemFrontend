@@ -51,7 +51,7 @@
   </td>
   <td>
     <button type="button" on:click={deleteUser} class="btn btn-danger">
-      Rader användare
+      Radera användare
     </button>
   </td>
 </tr>

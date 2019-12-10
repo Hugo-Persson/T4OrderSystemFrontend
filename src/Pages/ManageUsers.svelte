@@ -27,9 +27,11 @@
 </script>
 
 <div class="container-fluid ">
-  <div class="card">
-    <div class="card-header">Användare</div>
-    <div class="table-responsive">
+  <div class="card text-center">
+    <div class="card-header">
+      <h2>Alla användare</h2>
+    </div>
+    <div class="table-responsive text-left">
       <table class="table table-striped table-bordered table-hover">
         <thead class="thead-dark">
           <th scope="col">Namn</th>
