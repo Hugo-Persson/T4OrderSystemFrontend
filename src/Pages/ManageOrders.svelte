@@ -42,7 +42,7 @@
         <th scope="col " class="d-none d-md-table-cell">Ansvarig</th>
         <th scope="col">Status</th>
         <th scope="col " class="d-none d-md-table-cell">Datum</th>
-        <th scope="col">
+        <th scope="col" colspan="2">
           <form
             on:submit={filter}
             class="form-inline my-2 my-lg-0 text-center justify-content-end">

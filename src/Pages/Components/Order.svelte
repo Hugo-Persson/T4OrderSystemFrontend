@@ -48,7 +48,12 @@
     <td on:click={expandOrder} class="align-middle d-none d-md-table-cell">
       {new Date(order.date).toDateString()}
     </td>
-    <td>
+    <td class="align-middle d-none d-md-table-cell">
+      <button on:click={expandOrder} class="btn btn-secondary ">
+        Visa mer
+      </button>
+    </td>
+    <td class="align-middle d-none d-md-table-cell">
       <button
         class="btn btn-danger float-right"
         on:click={() => deleteOrder(order._id)}>
