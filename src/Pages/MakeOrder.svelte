@@ -12,6 +12,12 @@
   let error = false;
   let alertText = "";
 
+  async function init() {
+    if (!user) {
+      user = await apiCall("/checkAccount");
+    }
+  }
+
   function addFile(e) {
     e.preventDefault();
     console.log("add file");

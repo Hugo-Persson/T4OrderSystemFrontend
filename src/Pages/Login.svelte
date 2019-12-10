@@ -1,6 +1,6 @@
 <script>
   import { slide, fade } from "svelte/transition";
-  import { url } from "../Router";
+  import { url, params } from "../Router";
   export let apiCall;
 
   let email;

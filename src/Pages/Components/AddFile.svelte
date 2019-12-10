@@ -17,14 +17,15 @@
       <input
         type="file"
         class="custom-file-input"
-        id="inputGroupFile01"
+        id={index}
         aria-describedby="inputGroupFileAddon01"
         multiple={false}
         on:change={e => (files[index] = e.currentTarget.files[0])} />
-      <label class="custom-file-label text-truncate" for="inputGroupFile01">
-        {#if files[index] === undefined}
-          Choose file
-        {:else}{files[index].name}{/if}
+      <label
+        class="custom-file-label text-truncate"
+        data-browse="Ladda upp"
+        for={index}>
+        {#if files[index] === undefined}Välj fil{:else}{files[index].name}{/if}
       </label>
     </div>
     <div class="col-7">
@@ -32,7 +33,7 @@
         type="text"
         class="form-control"
         bind:value={descriptions[index]}
-        placeholder="File description" />
+        placeholder="Fil information" />
     </div>
     <button
       on:click={deleteFile}
