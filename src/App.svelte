@@ -33,7 +33,7 @@
         };
       }
       console.log(init);
-      fetch("http://localhost:8000" + path, init)
+      fetch(path, init)
         .then(res => res.json())
         .then(body => {
           console.log("answer");

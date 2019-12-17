@@ -144,9 +144,7 @@
         <ul class="list-group list-group-flush">
           {#each order.files as file}
             <li class="list-group-item" style="border:none">
-              <a href={'http://localhost:8000' + file.url}>
-                {file.originalName}
-              </a>
+              <a href={file.url}>{file.originalName}</a>
             </li>
             <li class="list-group-item">{file.description}</li>
           {/each}
