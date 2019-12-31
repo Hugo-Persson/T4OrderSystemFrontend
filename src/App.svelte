@@ -5,15 +5,17 @@
   import ExpandedOrder from "./Pages/ExpandedOrder.svelte";
   import AdminPanel from "./Pages/AdminPanel.svelte";
   import MyOrders from "./Pages/MyOrders.svelte";
-  import { url } from "./Router.js";
+  import { url, params } from "./Router.js";
   import { selectedOrder } from "./Store.js";
 
   let urlValue;
   let userValue;
   let selectedOrderValue;
+  let paramsValue;
 
   selectedOrder.subscribe(value => (selectedOrderValue = value));
   url.subscribe(value => (urlValue = value));
+  params.subscribe(val => (paramsValue = val));
 
   function apiCall(path, body, type, noAuthHandeling) {
     const contentType = !(type === "multipart/form-data");
@@ -33,7 +35,7 @@
         };
       }
       console.log(init);
-      fetch(path, init)
+      fetch("http://localhost:8000" + path, init)
         .then(res => res.json())
         .then(body => {
           console.log("answer");
@@ -93,7 +95,7 @@
 {:else if urlValue === 'orders' || urlValue === 'manageUsers' || urlValue === 'expandedOrder'}
   <AdminPanel {apiCall} />
 {:else if urlValue === 'makeOrder'}
-  <MakeOrder user={userValue} {apiCall} />
+  <MakeOrder user={userValue || paramsValue.user} {apiCall} />
 {:else if urlValue.substring(0, 14) === 'expandedOrder'}
   <ExpandedOrder order={selectedOrderValue} />
 {:else if urlValue === 'myOrders'}

@@ -11,7 +11,6 @@
   let verify = false;
   let verificationCode;
   let loading;
-  let verificationToken;
   let progress = "0%";
 
   let alertText = "";
@@ -31,25 +30,23 @@
       loading = true;
       const call = await apiCall("/login", JSON.stringify({ email: email }));
 
-      if (call.message === "NoAccount") {
-        progress = "33%";
-        register = true;
-        loading = false;
-        headerText = "Registera";
-      } else if (!call.error) {
+      if (call.error) {
+        if (call.message === "NoAccount") {
+          progress = "33%";
+          register = true;
+          loading = false;
+          headerText = "Registera";
+        }
+      } else {
         loading = false;
         console.log("Login no error");
         headerText = "Verifiera inloggning";
-        verificationToken = call.data.token;
         progress = "50%";
 
         feedbackInformation =
           "Ett mail har skickats med verifikations koden till " + email;
         verify = true;
-      } else {
-        console.log("huh");
       }
-      console.log(call);
     } catch (err) {
       console.log(err);
     }
@@ -67,11 +64,15 @@
       if (!call.error) {
         progress = "66%";
         verify = true;
-        verificationToken = call.data.token;
-        console.log(verificationToken);
         headerText = "Verifiera konto";
         feedbackInformation =
           "Ett mail har skickats med verifikations koden till " + email;
+      } else {
+        if (call.message == "AccountExists") {
+          error = true;
+          alertText = "Konto med den epost adressen finns redan";
+          return;
+        }
       }
     } catch (err) {
       console.log(err);
@@ -81,24 +82,30 @@
     try {
       console.log("code");
       e.preventDefault();
-      console.log(verificationToken);
       const call = await apiCall(
         "/verifyWithCode",
         JSON.stringify({
-          verificationCode: verificationCode,
-          token: verificationToken
+          verificationCode: verificationCode
         })
       );
-      console.log(call);
       if (call.error) {
         error = true;
         if (call.message === "WrongCode") {
           alertText = "Fel verifikations kod, försök igen";
+        } else if (call.message == "NoToken") {
+          alert("Verifikations sessionen har gått ut, sidan kommer laddas om");
+          location.reload();
+        } else if (call.message == "TooManyWrongs") {
+          alert(
+            "Du har skrivit in fel kod för många gånger, sidan kommer laddas om och du får logga in på nytt"
+          );
+          location.reload();
         }
       } else {
         //authed
         console.log(call);
-        if (call.admin) {
+        params.set({ user: call.user });
+        if (call.user.admin) {
           url.set("orders");
         } else {
           url.set("makeOrder");
