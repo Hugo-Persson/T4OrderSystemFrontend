@@ -5,6 +5,8 @@
   import ExpandedOrder from "./Pages/ExpandedOrder.svelte";
   import AdminPanel from "./Pages/AdminPanel.svelte";
   import MyOrders from "./Pages/MyOrders.svelte";
+  import LoadingRoute from "./Pages/LoadingRoute.svelte";
+
   import { url, params } from "./Router.js";
   import { selectedOrder } from "./Store.js";
 
@@ -100,7 +102,9 @@
   <ExpandedOrder order={selectedOrderValue} />
 {:else if urlValue === 'myOrders'}
   <MyOrders {apiCall} />
-{:else}Checking route{/if}
+{:else}
+  <LoadingRoute />
+{/if}
 
 <!-- <Router {url}>
   <Route path="/">loading</Route>
