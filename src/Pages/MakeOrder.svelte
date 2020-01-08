@@ -30,7 +30,7 @@
     const form = e.currentTarget;
     console.log("form", form);
     const formData = new FormData(form);
-    files.map(file => formData.append("files", file));
+    files.map(file => formData.append("files", file)); // I need to do this so the server can read the files
     formData.append("fileDescriptions", fileDescriptions);
     for (let [key, value] of formData.entries()) {
       console.log(key, value);

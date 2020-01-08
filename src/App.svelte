@@ -16,6 +16,7 @@
   let paramsValue;
 
   selectedOrder.subscribe(value => (selectedOrderValue = value));
+
   url.subscribe(value => (urlValue = value));
   params.subscribe(val => (paramsValue = val));
 
@@ -61,7 +62,7 @@
       console.log("route user");
       const user = await apiCall("/checkAccount", undefined, undefined, true);
       console.log("user", user);
-      userValue = user;
+
       const path = checkUser(user);
       console.log(path);
       url.set(path);
@@ -73,6 +74,7 @@
   function checkUser(user) {
     try {
       if (user.authenticated) {
+        userValue = user;
         if (user.admin) {
           return "orders";
         } else {
@@ -98,7 +100,7 @@
   <AdminPanel {apiCall} />
 {:else if urlValue === 'makeOrder'}
   <MakeOrder user={userValue || paramsValue.user} {apiCall} />
-{:else if urlValue.substring(0, 14) === 'expandedOrder'}
+{:else if urlValue === 'expandedOrder'}
   <ExpandedOrder order={selectedOrderValue} />
 {:else if urlValue === 'myOrders'}
   <MyOrders {apiCall} />
