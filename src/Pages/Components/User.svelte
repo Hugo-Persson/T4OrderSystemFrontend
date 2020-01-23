@@ -9,7 +9,7 @@
       if (call.error) {
         alert("Kunde inte radera användare");
       } else {
-        alert("användare raderad");
+        alert("Användare Raderad");
         getAllUsers();
       }
     } catch (err) {
@@ -17,7 +17,18 @@
     }
   }
   async function toggleUserAdmin() {
+    let message = "";
+    if (user.admin) {
+      message = "Är du säker att du vill ta bort admin från denna användare?";
+    } else {
+      message = "Är du säker att du vill göra användaren admin?";
+    }
+    if (!confirm(message)) {
+      return;
+    }
+
     const id = user._id;
+
     try {
       const call = await apiCall(
         "/toggleUserAdmin",

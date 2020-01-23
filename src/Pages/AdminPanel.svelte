@@ -46,6 +46,7 @@
   }
   async function deleteOrder(id) {
     try {
+      if (!confirm("Är du säker att du vill radera beställning")) return;
       const call = await apiCall("/deleteOrder", JSON.stringify({ id: id }));
       console.log(call);
       if (call.error) {
