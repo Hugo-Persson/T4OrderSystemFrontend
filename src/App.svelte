@@ -37,7 +37,7 @@
           "Content-Type": "application/json"
         };
       }
-      fetch(path, init)
+      fetch("http://localhost:8000" + path, init)
         .then(res => res.json())
         .then(body => {
           console.log("answer");

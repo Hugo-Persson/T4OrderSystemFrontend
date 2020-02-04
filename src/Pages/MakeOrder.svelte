@@ -42,7 +42,9 @@
     } else {
       success = true;
       alertText = "Beställning skapad";
+
       form.reset();
+      user.name = user.name; // I need to assign it again because the input is cleared after form.reset()
       files = [];
       fileDescriptions = [];
     }
@@ -106,7 +108,7 @@
               type="text"
               id="customer"
               class="form-control"
-              value={user.name}
+              bind:value={user.name}
               placeholder="Beställare" />
           </div>
         </div>
