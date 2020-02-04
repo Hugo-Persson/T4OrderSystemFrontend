@@ -45,7 +45,7 @@
     <h2>
       Alla beställningar
       <img
-        src="https://img.icons8.com/android/96/000000/refresh.png"
+        src="refresh.png"
         id="refresh"
         on:click={getAllOrders}
         alt="refresh" />
