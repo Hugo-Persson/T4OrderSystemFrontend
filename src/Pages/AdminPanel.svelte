@@ -8,6 +8,8 @@
   import { url, params } from "../Router.js";
 
   export let apiCall;
+  export let user;
+
   let urlValue;
   let paramsValue;
   params.subscribe(e => (paramsValue = e));
@@ -63,7 +65,7 @@
 </script>
 
 <header>
-  <AdminNavBar {apiCall} />
+  <AdminNavBar {user} {apiCall} />
 </header>
 {#if urlValue === 'orders'}
   <ManageOrders {apiCall} {getAllOrders} {allOrders} {deleteOrder} />

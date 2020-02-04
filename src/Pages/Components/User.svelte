@@ -5,11 +5,17 @@
   async function deleteUser() {
     const id = user._id;
     try {
-      const call = await apiCall("deleteUser", JSON.stringify({ id: id }));
+      if (!confirm("Är du säker att du vill radera användaren?")) return;
+
+      const call = await apiCall("/deleteUser", JSON.stringify({ id: id }));
+
       if (call.error) {
+        if (call.message === "NoDeleteYou") {
+          alert("Du kan inte radera dig själv");
+          return;
+        }
         alert("Kunde inte radera användare");
       } else {
-        alert("Användare Raderad");
         getAllUsers();
       }
     } catch (err) {
@@ -35,6 +41,10 @@
         JSON.stringify({ id: id })
       );
       if (call.error) {
+        if (call.message === "NoAdminYou") {
+          alert("Du kan inte ta bort admin från dig själv");
+          return;
+        }
         alert("Ett fel uppstod försök igen senare");
       } else {
         getAllUsers();

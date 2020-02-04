@@ -2,6 +2,7 @@
   import { url } from "../../Router.js";
 
   export let apiCall;
+  export let user;
 
   let urlValue;
   url.subscribe(val => (urlValue = val));
@@ -26,7 +27,7 @@
 </script>
 
 <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
-  <span class="navbar-brand mb-0 h1">Admin panel</span>
+  <span class="navbar-brand mb-0 h1">Inloggad som {user.name}</span>
 
   <div class=" navbar" id="navbarNavAltMarkup">
     <div class="navbar-nav">

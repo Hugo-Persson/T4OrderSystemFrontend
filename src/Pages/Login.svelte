@@ -88,9 +88,10 @@
           verificationCode: verificationCode
         })
       );
+      console.log("CALL: ", call);
       if (call.error) {
-        error = true;
         if (call.message === "WrongCode") {
+          error = true;
           alertText = "Fel verifikations kod, försök igen";
         } else if (call.message == "NoToken") {
           alert("Verifikations sessionen har gått ut, sidan kommer laddas om");

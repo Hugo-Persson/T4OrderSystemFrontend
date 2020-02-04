@@ -28,9 +28,29 @@
   }
 </script>
 
+<style>
+  #refresh {
+    float: right;
+    width: 2rem;
+    cursor: pointer;
+    transition: 0.6s;
+  }
+  #refresh:hover {
+    transform: rotate(270deg);
+  }
+</style>
+
 <div class="card m-sm-4 m-2 text-center">
   <div class="card-header">
-    <h2>Alla beställningar</h2>
+    <h2>
+      Alla beställningar
+      <img
+        src="https://img.icons8.com/android/96/000000/refresh.png"
+        id="refresh"
+        on:click={getAllOrders}
+        alt="refresh" />
+    </h2>
+
   </div>
   <table class="table table-striped table-hover table-bordered ">
     <caption>Klicka på en beställning för mer information</caption>
