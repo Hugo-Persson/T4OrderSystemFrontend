@@ -148,7 +148,7 @@
     }
   }
 
-  @media (min-width: 992px) {
+  @media (min-width: 1350px) {
     #login {
       width: 30%;
     }
