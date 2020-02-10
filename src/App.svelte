@@ -37,14 +37,32 @@
           "Content-Type": "application/json"
         };
       }
+      console.log("path", path);
       fetch("http://localhost:8000" + path, init)
         .then(res => res.json())
-        .then(body => {
+        .then(async body => {
           console.log("answer");
           if (body.error) {
             if (!noAuthHandeling && body.message === "NoAuth") {
               console.log("Logged out");
               alert("Du har blivit utloggad");
+              url.set("authenticate");
+            } else if (body.message === "NotAdmin") {
+              alert(
+                "Du är inte admin längre, detta har troligen hänt för någon annan admin har tagit bort din admin tillgång, du kommer nu bli skickad till rätt sida"
+              );
+              routeUser();
+            } else if (body.message === "NotActive") {
+              alert(
+                "Ditt konto är inaktivt, detta har hänt då någon admin har gjort det inaktivt, du kan använda kontot efter någon admin har gjort dig aktiv igen, du kommer nu bli utloggad"
+              );
+              await apiCall("/logOut");
+              url.set("authenticate");
+            } else if (body.message === "NoAccount" && path !== "/login") {
+              alert(
+                "Ditt konto har blivit raderat, detta beror på att någon admin har tagit bort det, du kommer nu bli utloggad"
+              );
+              await apiCall("/logOut");
               url.set("authenticate");
             } else resolve(body);
           } else {
