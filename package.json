@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "@types/jquery": "^3.3.31",
-    "sirv-cli": "^0.4.4"
+    "sirv-cli": "^0.4.4",
+    "timeUtils": "^2.0.0"
   },
   "scripts": {
     "build": "rollup -c",

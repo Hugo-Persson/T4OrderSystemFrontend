@@ -114,7 +114,7 @@
 {#if urlValue === 'authenticate'}
   <Login {apiCall} />
 {:else if urlValue === 'orders' || urlValue === 'manageUsers' || urlValue === 'expandedOrder'}
-  <AdminPanel user={userValue || paramsValue} {apiCall} />
+  <AdminPanel user={userValue || paramsValue.user} {apiCall} />
 {:else if urlValue === 'makeOrder'}
   <MakeOrder user={userValue || paramsValue.user} {apiCall} />
 {:else if urlValue === 'expandedOrder'}

@@ -1,19 +1,23 @@
 <script>
+  import { slide } from "svelte/transition";
+  import { url } from "../Router.js";
+  import Datepicker from "./Components/Datepicker/Datepicker.svelte";
+
   export let order;
   export let toggleExpand;
   export let deleteOrder;
   export let apiCall;
-  import { slide } from "svelte/transition";
-  import { url } from "../Router.js";
+  export let allAdmins;
 
+  let selectedAdmin;
   async function saveChanges() {
     try {
       const call = await apiCall(
         "/updateOrder",
         JSON.stringify({
           id: order._id,
-          email: order.responsible.email,
-          name: order.responsible.name
+          email: selectedAdmin,
+          status: order.status
         })
       );
       if (call.error) {
@@ -24,6 +28,12 @@
     } catch (err) {
       console.log(err);
     }
+  }
+  $: format = !order.estimatedFinishDate
+    ? "Obestämt"
+    : "#{l} den #{j}/#{m}/#{Y}";
+  function estimatedTimeUpdate(e) {
+    order.estimatedFinishDate = e.detail.date;
   }
 </script>
 
@@ -90,20 +100,23 @@
         <div class="card-header">Ansvarig</div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">
-            Namn:
-            <input
-              type="text"
-              class="form-control "
-              bind:value={order.responsible.name} />
+            Välj ansvarig:
+            <select class="form-control" bind:value={selectedAdmin}>
+              <option
+                value="Nobody"
+                selected={order.responsible.email === 'Nobody'}>
+                Ingen
+              </option>
+              {#each allAdmins as admin}
+                <option
+                  value={admin.email}
+                  selected={admin.email === order.responsible.email}>
+                  {admin.name}
+                </option>
+              {/each}
+            </select>
           </li>
-          <li class="list-group-item">
-            Email:
-            <input
-              type="email"
-              bind:value={order.responsible.email}
-              class="form-control"
-              aria-describedby="emailHelp" />
-          </li>
+
           <li class="list-group-item">
             Status:
             <select
@@ -114,6 +127,10 @@
               <option value="Påbörjad">Påbörjad</option>
               <option value="Avslutad">Avslutad</option>
             </select>
+          </li>
+          <li class="list-group-item">
+            Estimerat slutdatum:
+            <Datepicker {format} on:dateSelected={estimatedTimeUpdate} />
           </li>
         </ul>
       </div>

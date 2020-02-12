@@ -104,7 +104,6 @@
         }
       } else {
         //authed
-        console.log(call);
         params.set({ user: call.user });
         if (call.user.admin) {
           url.set("orders");

@@ -17,11 +17,26 @@
 
   let allOrders = [];
   let allUsers = [];
+  let allAdmins = [];
+
   getAllUsers();
   getAllOrders();
+  getAllAdmins();
+  async function getAllAdmins() {
+    try {
+      const call = await apiCall("/getAllAdmins");
+      if (call.error) {
+        //Unknow error
+      } else {
+        allAdmins = call.allAdmins;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
   async function getAllOrders() {
     try {
-      const call = await apiCall("/getAllorders");
+      const call = await apiCall("/getAllOrders");
       if (call.error) {
         console.log("error", call.message);
       }
@@ -70,7 +85,11 @@
 {#if urlValue === 'orders'}
   <ManageOrders {apiCall} {getAllOrders} {allOrders} {deleteOrder} />
 {:else if urlValue === 'expandedOrder'}
-  <ExpandedOrder order={paramsValue.order} {apiCall} {deleteOrder} />
+  <ExpandedOrder
+    order={paramsValue.order}
+    {apiCall}
+    {deleteOrder}
+    {allAdmins} />
 {:else}
   <ManageUsers {apiCall} {getAllUsers} {allUsers} />
 {/if}

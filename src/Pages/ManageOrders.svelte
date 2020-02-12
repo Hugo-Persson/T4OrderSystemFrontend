@@ -5,6 +5,7 @@
   export let apiCall;
   export let getAllOrders;
   export let deleteOrder;
+
   let searchQuery = "";
 
   export let allOrders = [];
