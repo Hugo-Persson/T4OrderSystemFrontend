@@ -1,4 +1,5 @@
 <script>
+  // Not my code, clone of https://github.com/6eDesign/svelte-calendar
   import Month from "./Month.svelte";
   import NavBar from "./NavBar.svelte";
   import Popover from "./Popover.svelte";
@@ -322,6 +323,7 @@
   }
 </style>
 
+<!-- Not my code, clone of https://github.com/6eDesign/svelte-calendar -->
 <div
   class="datepicker"
   class:open={isOpen}

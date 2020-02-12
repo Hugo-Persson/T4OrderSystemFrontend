@@ -17,7 +17,8 @@
         JSON.stringify({
           id: order._id,
           email: selectedAdmin,
-          status: order.status
+          status: order.status,
+          estimatedFinishDate: order.estimatedFinishDate
         })
       );
       if (call.error) {
@@ -30,7 +31,7 @@
     }
   }
   $: format = !order.estimatedFinishDate
-    ? "Obestämt"
+    ? "Datum ej bestämt"
     : "#{l} den #{j}/#{m}/#{Y}";
   function estimatedTimeUpdate(e) {
     order.estimatedFinishDate = e.detail.date;
@@ -130,7 +131,10 @@
           </li>
           <li class="list-group-item">
             Estimerat slutdatum:
-            <Datepicker {format} on:dateSelected={estimatedTimeUpdate} />
+            <Datepicker
+              {format}
+              on:dateSelected={estimatedTimeUpdate}
+              selected={order.estimatedFinishDate ? new Date(order.estimatedFinishDate) : undefined} />
           </li>
         </ul>
       </div>
