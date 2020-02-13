@@ -9,4 +9,8 @@
   <td>{order.responsible.name}</td>
   <td>{order.status}</td>
   <td>{new Date(order.date).toDateString()}</td>
+  <td>
+    {order.estimatedFinishDate ? new Date(order.estimatedFinishDate).toDateString() : 'Obestämt'}
+  </td>
+
 </tr>

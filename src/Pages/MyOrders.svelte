@@ -23,16 +23,17 @@
 <header>
   <UserNavBar {apiCall} />
 </header>
-<div class="card m-sm-4 m-2 text-center">
+<div class="card m-sm-4 m-2 text-center table-responsive-md">
   <table class="table table-striped table-hover table-bordered ">
     <thead class="thead-dark">
       <tr>
         <th scope="col">#</th>
         <th scope="col">Namn</th>
-        <th scope="col " class="d-none d-sm-table-cell">Beställare</th>
-        <th scope="col " class="d-none d-md-table-cell">Ansvarig</th>
+        <th scope="col ">Beställare</th>
+        <th scope="col ">Ansvarig</th>
         <th scope="col">Status</th>
-        <th scope="col " class="d-none d-md-table-cell">Datum</th>
+        <th scope="col ">Datum</th>
+        <th scope="col ">Slutdatum</th>
       </tr>
     </thead>
     <tbody>
