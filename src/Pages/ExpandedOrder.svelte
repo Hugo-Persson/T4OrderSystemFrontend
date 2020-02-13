@@ -8,6 +8,7 @@
   export let deleteOrder;
   export let apiCall;
   export let allAdmins;
+  export let getAllOrders;
 
   let selectedAdmin;
   async function saveChanges() {
@@ -24,6 +25,7 @@
       if (call.error) {
         alert("Ett fel uppstod, försök igen");
       } else {
+        getAllOrders();
         url.set("orders");
       }
     } catch (err) {

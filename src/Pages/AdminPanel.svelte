@@ -89,7 +89,8 @@
     order={paramsValue.order}
     {apiCall}
     {deleteOrder}
-    {allAdmins} />
+    {allAdmins}
+    {getAllOrders} />
 {:else}
   <ManageUsers {apiCall} {getAllUsers} {allUsers} />
 {/if}
