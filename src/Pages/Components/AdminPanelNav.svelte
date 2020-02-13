@@ -33,9 +33,33 @@
     <div class="navbar-nav">
       <a
         href="#"
-        class="nav-item nav-link {urlValue === 'orders' ? 'active' : ''}"
-        on:click={e => directUser(e, 'orders')}>
-        Beställningar
+        class="nav-item nav-link {urlValue === 'allOrders' ? 'active' : ''}"
+        on:click={e => directUser(e, 'allOrder')}>
+        Alla Beställningar
+      </a>
+      <a
+        href="#"
+        class="nav-item nav-link {urlValue === 'myOrders' ? 'active' : ''}"
+        on:click={e => directUser(e, 'myOrders')}>
+        Mina Beställningar
+      </a>
+      <a
+        href="#"
+        class="nav-item nav-link {urlValue === 'ongoingOrders' ? 'active' : ''}"
+        on:click={e => directUser(e, 'ongoingOrders')}>
+        Påbörjade Beställningar
+      </a>
+      <a
+        href="#"
+        class="nav-item nav-link {urlValue === 'notStartedOrders' ? 'active' : ''}"
+        on:click={e => directUser(e, 'notStartedOrders')}>
+        Icke Påbörjade Beställningar
+      </a>
+      <a
+        href="#"
+        class="nav-item nav-link {urlValue === 'finishedOrders' ? 'active' : ''}"
+        on:click={e => directUser(e, 'finishedOrders')}>
+        Avslutade Beställningar
       </a>
       <a
         href="#"
