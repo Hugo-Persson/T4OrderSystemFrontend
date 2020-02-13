@@ -138,6 +138,11 @@
               on:dateSelected={estimatedTimeUpdate}
               selected={order.estimatedFinishDate ? new Date(order.estimatedFinishDate) : undefined} />
           </li>
+          <li class="list-group-item text-center">
+            <button class="btn btn-lg btn-success" on:click={saveChanges}>
+              Spara ändringar
+            </button>
+          </li>
         </ul>
       </div>
     </div>
@@ -169,19 +174,14 @@
 
   </div>
   <div class="row">
-    <div class="col ">
+    <div class="col " />
+    <div class="col text-center">
       <button
         class="btn btn-lg btn-danger"
         on:click={() => deleteOrder(order._id)}>
         Radera beställningar
       </button>
-
     </div>
-    <div class="col" />
-    <div class="col ">
-      <button class="btn btn-lg btn-success" on:click={saveChanges}>
-        Spara ändringar
-      </button>
-    </div>
+    <div class="col " />
   </div>
 </div>
