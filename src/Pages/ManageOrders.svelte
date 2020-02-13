@@ -5,6 +5,7 @@
   export let apiCall;
   export let getAllOrders;
   export let deleteOrder;
+  export let header;
 
   let searchQuery = "";
 
@@ -44,7 +45,7 @@
 <div class="card m-sm-4 m-2 text-center">
   <div class="card-header">
     <h2>
-      Alla beställningar
+      {header}
       <img
         src="refresh.png"
         id="refresh"

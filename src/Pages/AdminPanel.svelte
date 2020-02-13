@@ -19,9 +19,36 @@
   let allUsers = [];
   let allAdmins = [];
 
+  let myOrders = [];
+  let notStartedOrders = [];
+  let ongoingOrders = [];
+  let completedOrders = [];
+
   getAllUsers();
   getAllOrders();
   getAllAdmins();
+
+  async function sortAllOrders() {
+    console.log("All orders", allOrders);
+    myOrders = allOrders.filter(value => {
+      return value.responsible.email === user.email;
+    });
+    notStartedOrders = allOrders.filter(value => {
+      console.log(value.status === "Ej påbörjad");
+
+      return value.status === "Ej påbörjad";
+    });
+    ongoingOrders = allOrders.filter(value => {
+      return value.status === "Påbörjad";
+    });
+    completedOrders = allOrders.filter(value => {
+      return value.status === "Avslutad";
+    });
+    console.log("My orders", myOrders);
+    console.log("Not startedOrder", notStartedOrders);
+    console.log("Ongoing orders", ongoingOrders);
+    console.log("Completed orders", completedOrders);
+  }
   async function getAllAdmins() {
     try {
       const call = await apiCall("/getAllAdmins");
@@ -40,9 +67,9 @@
       if (call.error) {
         console.log("error", call.message);
       }
-      console.log("call", call);
+
       allOrders = call.data;
-      console.log("allOrders", allOrders);
+      sortAllOrders();
     } catch (err) {
       console.log(err);
     }
@@ -70,7 +97,7 @@
         // TODO:Error handeling
       } else {
         console.log("success");
-        url.set("orders");
+        url.set("allOrders");
         getAllOrders();
       }
     } catch (err) {
@@ -82,8 +109,41 @@
 <header>
   <AdminNavBar {user} {apiCall} />
 </header>
-{#if urlValue === 'orders'}
-  <ManageOrders {apiCall} {getAllOrders} {allOrders} {deleteOrder} />
+{#if urlValue === 'allOrders'}
+  <ManageOrders
+    {apiCall}
+    {getAllOrders}
+    header="Alla beställningar"
+    {allOrders}
+    {deleteOrder} />
+{:else if urlValue === 'adminMyOrders'}
+  <ManageOrders
+    {apiCall}
+    {getAllOrders}
+    header="Mina beställningar"
+    allOrders={myOrders}
+    {deleteOrder} />
+{:else if urlValue === 'ongoingOrders'}
+  <ManageOrders
+    {apiCall}
+    {getAllOrders}
+    header="Påbörjade beställningar"
+    allOrders={ongoingOrders}
+    {deleteOrder} />
+{:else if urlValue === 'notStartedOrders'}
+  <ManageOrders
+    {apiCall}
+    {getAllOrders}
+    header="Ej påbörjade beställningar"
+    allOrders={notStartedOrders}
+    {deleteOrder} />
+{:else if urlValue === 'finishedOrders'}
+  <ManageOrders
+    {apiCall}
+    {getAllOrders}
+    header="Avslutade beställningar"
+    allOrders={completedOrders}
+    {deleteOrder} />
 {:else if urlValue === 'expandedOrder'}
   <ExpandedOrder
     order={paramsValue.order}

@@ -106,7 +106,7 @@
         //authed
         params.set({ user: call.user });
         if (call.user.admin) {
-          url.set("orders");
+          url.set("allOrders");
         } else {
           url.set("makeOrder");
         }

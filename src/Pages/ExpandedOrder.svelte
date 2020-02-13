@@ -26,7 +26,7 @@
         alert("Ett fel uppstod, försök igen");
       } else {
         getAllOrders();
-        url.set("orders");
+        url.set("allOrders");
       }
     } catch (err) {
       console.log(err);

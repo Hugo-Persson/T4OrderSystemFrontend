@@ -93,7 +93,7 @@
       if (user.authenticated) {
         userValue = user;
         if (user.admin) {
-          return "orders";
+          return "allOrders";
         } else {
           return "makeOrder";
         }
@@ -113,7 +113,7 @@
 
 {#if urlValue === 'authenticate'}
   <Login {apiCall} />
-{:else if urlValue === 'orders' || urlValue === 'manageUsers' || urlValue === 'expandedOrder'}
+{:else if urlValue === 'allOrders' || urlValue === 'adminMyOrders' || urlValue === 'ongoingOrders' || urlValue === 'notStartedOrders' || urlValue === 'finishedOrders' || urlValue === 'manageUsers' || urlValue === 'expandedOrder'}
   <AdminPanel user={userValue || paramsValue.user} {apiCall} />
 {:else if urlValue === 'makeOrder'}
   <MakeOrder user={userValue || paramsValue.user} {apiCall} />
@@ -124,18 +124,3 @@
 {:else}
   <LoadingRoute />
 {/if}
-
-<!-- <Router {url}>
-  <Route path="/">loading</Route>
-  <Route path="/authenticate">
-    <Login {apiCall} />
-  </Route>
-  <Route path="/orders">
-    <Orders {apiCall} />
-  </Route>
-  <Route path="/makeOrder">
-    <MakeOrder {apiCall} {checkUser} />
-  </Route>
-  <Route path="*" component={PageNotFound} />
-
-</Router> -->

@@ -24,43 +24,67 @@
       console.log(err);
     }
   }
+
+  let dropdownToggle = false; // Because I skipped jquery and all of bootstrap JS I need to make a custom toogle
 </script>
 
 <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
   <span class="navbar-brand mb-0 h1">Inloggad som {user.name}</span>
 
   <div class=" navbar" id="navbarNavAltMarkup">
+
     <div class="navbar-nav">
-      <a
-        href="#"
-        class="nav-item nav-link {urlValue === 'allOrders' ? 'active' : ''}"
-        on:click={e => directUser(e, 'allOrder')}>
-        Alla Beställningar
-      </a>
-      <a
-        href="#"
-        class="nav-item nav-link {urlValue === 'myOrders' ? 'active' : ''}"
-        on:click={e => directUser(e, 'myOrders')}>
-        Mina Beställningar
-      </a>
-      <a
-        href="#"
-        class="nav-item nav-link {urlValue === 'ongoingOrders' ? 'active' : ''}"
-        on:click={e => directUser(e, 'ongoingOrders')}>
-        Påbörjade Beställningar
-      </a>
-      <a
-        href="#"
-        class="nav-item nav-link {urlValue === 'notStartedOrders' ? 'active' : ''}"
-        on:click={e => directUser(e, 'notStartedOrders')}>
-        Icke Påbörjade Beställningar
-      </a>
-      <a
-        href="#"
-        class="nav-item nav-link {urlValue === 'finishedOrders' ? 'active' : ''}"
-        on:click={e => directUser(e, 'finishedOrders')}>
-        Avslutade Beställningar
-      </a>
+
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="navbarDropdown"
+          role="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+          on:click={() => (dropdownToggle = !dropdownToggle)}>
+          Beställningar
+        </a>
+        <div
+          class="dropdown-menu"
+          style={dropdownToggle ? 'display:block' : ''}
+          aria-labelledby="navbarDropdown">
+          <a
+            href="#"
+            class="nav-item nav-link {urlValue === 'adminMyOrders' ? 'active' : ''}"
+            on:click={e => directUser(e, 'adminMyOrders')}>
+            Mina Beställningar
+          </a>
+          <a
+            href="#"
+            class="nav-item nav-link {urlValue === 'ongoingOrders' ? 'active' : ''}"
+            on:click={e => directUser(e, 'ongoingOrders')}>
+            Påbörjade Beställningar
+          </a>
+          <a
+            href="#"
+            class="nav-item nav-link {urlValue === 'notStartedOrders' ? 'active' : ''}"
+            on:click={e => directUser(e, 'notStartedOrders')}>
+            Icke Påbörjade Beställningar
+          </a>
+          <a
+            href="#"
+            class="nav-item nav-link {urlValue === 'finishedOrders' ? 'active' : ''}"
+            on:click={e => directUser(e, 'finishedOrders')}>
+            Avslutade Beställningar
+          </a>
+          <div class="dropdown-divider" />
+          <a
+            href="#"
+            class="nav-item nav-link {urlValue === 'allOrders' ? 'active' : ''}"
+            on:click={e => directUser(e, 'allOrders')}>
+            Alla Beställningar
+          </a>
+        </div>
+      </li>
+
       <a
         href="#"
         class="nav-item nav-link {urlValue === 'manageUsers' ? 'active' : ''}
