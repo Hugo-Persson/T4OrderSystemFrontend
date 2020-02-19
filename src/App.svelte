@@ -113,7 +113,7 @@
 
 {#if urlValue === 'authenticate'}
   <Login {apiCall} />
-{:else if urlValue === 'allOrders' || urlValue === 'adminMyOrders' || urlValue === 'ongoingOrders' || urlValue === 'notStartedOrders' || urlValue === 'finishedOrders' || urlValue === 'manageUsers' || urlValue === 'expandedOrder'}
+{:else if urlValue === 'allOrders' || urlValue === 'adminMyOrders' || urlValue === 'ongoingOrders' || urlValue === 'notStartedOrders' || urlValue === 'myProfile' || urlValue === 'finishedOrders' || urlValue === 'manageUsers' || urlValue === 'expandedOrder'}
   <AdminPanel user={userValue || paramsValue.user} {apiCall} />
 {:else if urlValue === 'makeOrder'}
   <MakeOrder user={userValue || paramsValue.user} {apiCall} />

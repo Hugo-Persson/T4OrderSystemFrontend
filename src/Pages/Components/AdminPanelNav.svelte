@@ -87,6 +87,13 @@
 
       <a
         href="#"
+        class="nav-item nav-link {urlValue === 'myProfile' ? 'active' : ''}
+        "
+        on:click={e => directUser(e, 'myProfile')}>
+        Min profil
+      </a>
+      <a
+        href="#"
         class="nav-item nav-link {urlValue === 'manageUsers' ? 'active' : ''}
         "
         on:click={e => directUser(e, 'manageUsers')}>
