@@ -5,7 +5,16 @@
   async function deleteUser() {
     const id = user._id;
     try {
-      if (!confirm("Är du säker att du vill radera användaren?")) return;
+      let message = "";
+      if (!user.admin) {
+        message = "Är du säker att du vill radera användaren?";
+      } else if (user.active) {
+        message = "Är du säker att du vill göra användaren inaktiv?";
+      } else {
+        message = "Är du säker att du vill göra användaren aktiv";
+      }
+
+      if (!confirm(message)) return;
 
       const call = await apiCall("/deleteUser", JSON.stringify({ id: id }));
 
@@ -71,8 +80,11 @@
 
   </td>
   <td>
-    <button type="button" on:click={deleteUser} class="btn btn-danger">
-      Radera användare
+    <button
+      type="button"
+      on:click={deleteUser}
+      class="btn {user.active ? 'btn-danger' : 'btn-success'}">
+      {user.admin ? (user.active ? 'Gör Inaktiv' : 'Gör Aktiv') : 'Radera användare'}
     </button>
   </td>
 </tr>

@@ -52,11 +52,15 @@
                 "Du är inte admin längre, detta har troligen hänt för någon annan admin har tagit bort din admin tillgång, du kommer nu bli skickad till rätt sida"
               );
               routeUser();
-            } else if (body.message === "NotActive") {
+            } else if (
+              body.message === "NotActive" &&
+              urlValue !== "authenticate"
+            ) {
               alert(
                 "Ditt konto är inaktivt, detta har hänt då någon admin har gjort det inaktivt, du kan använda kontot efter någon admin har gjort dig aktiv igen, du kommer nu bli utloggad"
               );
               await apiCall("/logOut");
+
               url.set("authenticate");
             } else if (body.message === "NoAccount" && path !== "/login") {
               alert(

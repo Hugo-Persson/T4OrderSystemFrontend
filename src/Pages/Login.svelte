@@ -36,6 +36,11 @@
           register = true;
           loading = false;
           headerText = "Registera";
+        } else if (call.message === "NotActive") {
+          error = true;
+          alertText =
+            "Kontot är inaktivt, kontakta en admin för att göra det aktivt igen";
+          loading = false;
         }
       } else {
         loading = false;
