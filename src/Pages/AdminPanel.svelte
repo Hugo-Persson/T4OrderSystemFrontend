@@ -6,6 +6,7 @@
   import AdminNavBar from "./Components/AdminPanelNav.svelte";
   import ExpandedOrder from "./ExpandedOrder.svelte";
   import { url, params } from "../Router.js";
+  import MyProfile from "./MyProfile.svelte";
 
   export let apiCall;
   export let user;
@@ -151,6 +152,8 @@
     {deleteOrder}
     {allAdmins}
     {getAllOrders} />
+{:else if urlValue === 'myProfile'}
+  <MyProfile {user} {apiCall} />
 {:else}
   <ManageUsers {apiCall} {getAllUsers} {allUsers} />
 {/if}

@@ -20,7 +20,7 @@
 
       if (call.error) {
         if (call.message === "NoDeleteYou") {
-          alert("Du kan inte radera dig själv");
+          alert("Du kan inte göra dig själv inaktiv");
           return;
         }
         alert("Kunde inte radera användare");
