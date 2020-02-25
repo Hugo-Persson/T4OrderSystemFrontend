@@ -8,14 +8,15 @@
   let loading = false;
   $: changed = JSON.stringify(user) === JSON.stringify(originalUserData);
 
+  let showVerifyEmail = false;
+
+  let verificationCode;
   async function updateAccount(e) {
     try {
       e.preventDefault();
-      loading = true;
-      const call = await apiCall(
-        "/updateAccount",
-        JSON.stringify({ user: user })
-      );
+      showVerifyEmail = true;
+      const call = await apiCall("/updateUser", JSON.stringify({ user: user }));
+      console.log("CALL", call);
       if (call.error) {
         if (call.message == "AccountExists") {
           alert("Ett konto med din mailen finns redan");
@@ -24,14 +25,38 @@
           alert("Något gick fel, försök igen senare");
         }
       } else {
-        user = call.user;
-        originalUserData = { ...user };
+        if (call.message === "VerifyEmail") {
+          verifyEmail = true;
+        } else {
+          user = call.user;
+          originalUserData = { ...user };
+        }
       }
       loading = false;
     } catch (err) {
       console.log("Err", err);
       alert("Något gick fel, försök igen senare");
       loading = false;
+    }
+  }
+  async function verifyEmail(e) {
+    try {
+      const call = await apiCall(
+        "/verifyUpdateEmail",
+        JSON.stringify({ verificationCode: verificationCode })
+      );
+      if (call.error) {
+        if (call.message === "WrongCode") {
+          alert("Du har skrivit in fel kod");
+        } else {
+          alert("Något gick fel");
+        }
+      } else {
+        alert("Ditt konot har uppdaterats");
+        user = call.user;
+      }
+    } catch (err) {
+      console.log(err);
     }
   }
 </script>
@@ -69,3 +94,30 @@
     </div>
   {/if}
 </form>
+{#if showVerifyEmail}
+  <div class="m-2" transition:slide>
+    <form
+      on:submit={e => {
+        e.preventDefault();
+        alert(verifyEmail);
+        verifyEmail();
+      }}>
+      <div class="form-group ">
+        <label for="verificationCodeInput">Verifikations kod</label>
+        <input
+          bind:value={verificationCode}
+          type="text"
+          class="form-control"
+          id="verificationCodeInput"
+          aria-describedby="emailHelp"
+          placeholder="Skriv in din verifikations kod" />
+        <small id="emailHelp" class="form-text text-muted">
+          Ett epost meddelande med en kod har skickats till {user.email}
+        </small>
+      </div>
+      <button type="submit" class="btn btn-success">
+        Verifiera email byte
+      </button>
+    </form>
+  </div>
+{/if}
