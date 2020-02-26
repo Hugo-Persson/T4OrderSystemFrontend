@@ -113,6 +113,7 @@
               {#each allAdmins as admin}
                 <option
                   value={admin.email}
+                  disabled={!admin.active}
                   selected={admin.email === order.responsible.email}>
                   {admin.name}
                 </option>

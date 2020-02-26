@@ -2,7 +2,7 @@
   export let user;
   export let getAllUsers;
   export let apiCall;
-  async function deleteUser() {
+  async function toggleUserExistence() {
     const id = user._id;
     try {
       let message = "";
@@ -16,15 +16,20 @@
 
       if (!confirm(message)) return;
 
-      const call = await apiCall("/deleteUser", JSON.stringify({ id: id }));
-
+      const call = await apiCall(
+        "/toggleUserExistence",
+        JSON.stringify({ id: id })
+      );
+      console.log("CALL", call);
       if (call.error) {
         if (call.message === "NoDeleteYou") {
           alert("Du kan inte göra dig själv inaktiv");
           return;
         }
-        alert("Kunde inte radera användare");
+        alert("Ett fel uppstod, försök igen senare");
       } else {
+        console.log("YAHHH", "EMMEMEMEMEME");
+
         getAllUsers();
       }
     } catch (err) {
@@ -49,6 +54,7 @@
         "/toggleUserAdmin",
         JSON.stringify({ id: id })
       );
+      console.log("CALL", call);
       if (call.error) {
         if (call.message === "NoAdminYou") {
           alert("Du kan inte ta bort admin från dig själv");
@@ -82,7 +88,7 @@
   <td>
     <button
       type="button"
-      on:click={deleteUser}
+      on:click={toggleUserExistence}
       class="btn {user.active ? 'btn-danger' : 'btn-success'}">
       {user.admin ? (user.active ? 'Gör Inaktiv' : 'Gör Aktiv') : 'Radera användare'}
     </button>

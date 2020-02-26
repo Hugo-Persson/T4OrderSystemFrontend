@@ -27,7 +27,6 @@
 
   getAllUsers();
   getAllOrders();
-  getAllAdmins();
 
   async function sortAllOrders() {
     console.log("All orders", allOrders);
@@ -51,7 +50,9 @@
     console.log("Completed orders", completedOrders);
   }
   async function getAllAdmins() {
-    try {
+    allAdmins = allUsers.filter(value => value.admin);
+
+    /* try {
       const call = await apiCall("/getAllAdmins");
       if (call.error) {
         //Unknow error
@@ -60,9 +61,11 @@
       }
     } catch (err) {
       console.log(err);
-    }
+    } */
   }
   async function getAllOrders() {
+    console.log("GetAllOrders", "FDFD");
+
     try {
       const call = await apiCall("/getAllOrders");
       if (call.error) {
@@ -76,6 +79,7 @@
     }
   }
   async function getAllUsers() {
+    console.log("GetAllOrders", "FDFD");
     try {
       const call = await apiCall("/getAllUsers");
       console.log("call", call);
@@ -84,6 +88,7 @@
         alert("Kunde inte hämta anvädare från servern");
       } else {
         allUsers = call.users;
+        getAllAdmins();
       }
     } catch (err) {
       console.log(err);
