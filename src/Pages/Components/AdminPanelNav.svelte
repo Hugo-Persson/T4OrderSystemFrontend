@@ -24,7 +24,9 @@
       console.log(err);
     }
   }
-
+  document.addEventListener("click", e => {
+    if (e.target.id !== "navbarDropdown") dropdownToggle = false; // I want to hide the dropdown in all cases except when the users clicks the dropdownButton
+  });
   let dropdownToggle = false; // Because I skipped jquery and all of bootstrap JS I need to make a custom toogle
 </script>
 
