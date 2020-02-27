@@ -3,6 +3,7 @@
   export let getAllUsers;
   export let apiCall;
   async function toggleUserExistence() {
+    console.log("Toggle user");
     const id = user._id;
     try {
       let message = "";

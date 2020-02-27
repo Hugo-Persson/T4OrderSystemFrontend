@@ -114,7 +114,8 @@
                 <option
                   value={admin.email}
                   disabled={!admin.active}
-                  selected={admin.email === order.responsible.email}>
+                  selected={admin.email === order.responsible.email}
+                  class={admin.email === order.responsible.email && !admin.active ? 'text-danger' : ''}>
                   {admin.name}
                 </option>
               {/each}

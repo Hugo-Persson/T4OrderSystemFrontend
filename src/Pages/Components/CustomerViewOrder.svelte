@@ -1,5 +1,9 @@
 <script>
   export let order;
+
+  if (!order.responsible.active) {
+    order.responsible = { name: "Ingen", email: "NoBody", active: false }; // if the admin is disabled I want to display no responsible admin to the user
+  }
 </script>
 
 <tr>
